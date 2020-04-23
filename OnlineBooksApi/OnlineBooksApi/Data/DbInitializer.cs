@@ -42,7 +42,7 @@ namespace OnlineBooksApi.Data
                 new Author{ FirstName = "Ryszard", LastName = "Kapuściński", Nationality = "Polska", DataOfBirth = DateTime.Parse("04/03/1932"), PlaceOfBirth = "Pińsk", CountryOfBirth = "Białorusi",
                 DateOfDeath =DateTime.Parse("23/01/2007"), PlaceOfDeath="Warszawa", CountryOfDeath="Polska",Description= @"Polski reportażysta, publicysta, poeta i fotograf, zwany „cesarzem reportażu”.\n"
                 + @"Jest najczęściej, obok Stanisława Lema, tłumaczonym polskim autorem."},
-                new Author{ FirstName = "Jan", LastName = "Kochanowski", Nationality = "Polska", PlaceOfBirth = "Sycyna Północna", CountryOfBirth = "Polska",
+                new Author{ FirstName = "Jan", LastName = "Kochanowski", Nationality = "Polska", PlaceOfBirth = "Sycyna Północna", CountryOfBirth = "Polska", IsAlive = false,
                 DateOfDeath =DateTime.Parse("22/08/1584"), PlaceOfDeath="Lublin", CountryOfDeath="Polska",Description="Polski poeta epoki renesansu, tłumacz, prepozyt kapituły katedralnej poznańskiej w latach 1564–1574, poeta nadworny Stefana Batorego w 1579 roku, sekretarz królewski i wojski sandomierski w latach 1579–1584. Uważany jest za jednego z najwybitniejszych twórców renesansu w Europie i poetę, który najbardziej przyczynił się do rozwoju polskiego języka literackiego."},
                 new Author{ FirstName = "Maria", LastName = "Konopnicka", Nationality = "Polska", DataOfBirth = DateTime.Parse("23/05/1842"), PlaceOfBirth = "Suwałki", CountryOfBirth = "Polska",
                 DateOfDeath =DateTime.Parse("08/10/1910"), PlaceOfDeath="Lwów", CountryOfDeath="Ukraina"},

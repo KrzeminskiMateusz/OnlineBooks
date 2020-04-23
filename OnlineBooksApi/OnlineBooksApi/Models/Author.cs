@@ -58,6 +58,8 @@ namespace OnlineBooksApi.Models
 
         public byte[]? Image { get; set; }
 
+        public bool? IsAlive { get; set; }
+
         public IEnumerable<Book>? Books { get; set; }
 
         public IEnumerable<AuthorCategoryAssigment>? Categories { get; set; }
