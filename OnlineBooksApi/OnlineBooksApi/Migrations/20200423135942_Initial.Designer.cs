@@ -10,8 +10,8 @@ using OnlineBooksApi.Data;
 namespace OnlineBooksApi.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20200421193156_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20200423135942_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,17 +28,46 @@ namespace OnlineBooksApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DataOfBirth")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CountryOfBirth")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("CountryOfDeath")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("DataOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("DateOfDeath")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(2000)")
+                        .HasMaxLength(2000);
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Nationality")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("PlaceOfBirth")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("PlaceOfDeath")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -74,10 +103,14 @@ namespace OnlineBooksApi.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1500)")
+                        .HasMaxLength(1500);
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -108,8 +141,10 @@ namespace OnlineBooksApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CategoryName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -139,7 +174,9 @@ namespace OnlineBooksApi.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -183,8 +220,10 @@ namespace OnlineBooksApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("SubcategoryName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -246,7 +285,7 @@ namespace OnlineBooksApi.Migrations
             modelBuilder.Entity("OnlineBooksApi.Models.ShelfBookAssigment", b =>
                 {
                     b.HasOne("OnlineBooksApi.Models.Book", "Book")
-                        .WithMany("Shelfs")
+                        .WithMany("Shelves")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -261,7 +300,7 @@ namespace OnlineBooksApi.Migrations
             modelBuilder.Entity("OnlineBooksApi.Models.ShelftAuthorAssigment", b =>
                 {
                     b.HasOne("OnlineBooksApi.Models.Author", "Author")
-                        .WithMany("Shelfs")
+                        .WithMany("Shelves")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnlineBooksApi.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,10 +13,17 @@ namespace OnlineBooksApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Nationality = table.Column<string>(nullable: true),
-                    DataOfBirth = table.Column<DateTime>(nullable: false)
+                    FirstName = table.Column<string>(maxLength: 50, nullable: true),
+                    LastName = table.Column<string>(maxLength: 50, nullable: true),
+                    Nationality = table.Column<string>(maxLength: 50, nullable: true),
+                    DataOfBirth = table.Column<DateTime>(type: "date", nullable: true),
+                    PlaceOfBirth = table.Column<string>(maxLength: 50, nullable: true),
+                    CountryOfBirth = table.Column<string>(maxLength: 50, nullable: true),
+                    DateOfDeath = table.Column<DateTime>(type: "date", nullable: true),
+                    PlaceOfDeath = table.Column<string>(maxLength: 50, nullable: true),
+                    CountryOfDeath = table.Column<string>(maxLength: 50, nullable: true),
+                    Description = table.Column<string>(maxLength: 2000, nullable: true),
+                    Image = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -29,7 +36,7 @@ namespace OnlineBooksApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +49,7 @@ namespace OnlineBooksApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +62,7 @@ namespace OnlineBooksApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SubcategoryName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,8 +75,8 @@ namespace OnlineBooksApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 100, nullable: false),
+                    Description = table.Column<string>(maxLength: 1500, nullable: false),
                     Cover = table.Column<byte[]>(nullable: true),
                     AuthorId = table.Column<int>(nullable: true)
                 },
