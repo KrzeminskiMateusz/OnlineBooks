@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,17 +12,22 @@ namespace OnlineBooksApi.Models
     public class Book
     {
         public int Id { get; set; }
+#nullable enable
 
-        [Required]
         [StringLength(100, MinimumLength = 1)]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         [Required]
         [StringLength(1500, MinimumLength = 1)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-#nullable enable
         public byte[]? Cover { get; set; }
+
+        [DataType(DataType.Date)]
+        [Column(TypeName = "date")]
+        public DateTime PublcationDate { get; set; }
+
+        public int? NumberOfPages { get; set; }
 
         public int? AuthorId { get; set; }
 
