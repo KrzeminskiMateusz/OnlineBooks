@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using OnlineBooksApi.Data;
 
 namespace OnlineBooksApi
@@ -30,7 +31,10 @@ namespace OnlineBooksApi
             services.AddDbContext<LibraryContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("LibraryContext")));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddSwaggerDocument();
         }
 

@@ -60,13 +60,13 @@ namespace OnlineBooksApi.Models
 
         public bool? IsAlive { get; set; }
 
-        public IEnumerable<Book>? Books { get; set; }
-
         public IEnumerable<AuthorCategoryAssigment>? Categories { get; set; }
 
         public IEnumerable<AuthorSubcategoryAssigment>? Subcategories { get; set; }
 
         public IEnumerable<ShelftAuthorAssigment>? Shelves { get; set; }
+
+        public IEnumerable<Book>? Books { get; set; }
 #nullable disable
     }
 }

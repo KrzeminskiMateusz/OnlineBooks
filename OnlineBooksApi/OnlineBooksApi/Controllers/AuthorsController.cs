@@ -26,13 +26,32 @@ namespace OnlineBooksApi.Controllers
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
             return await _context.Authors.ToListAsync();
+
+            
         }
 
         // GET: api/Authors/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Author>> GetAuthor(int id)
         {
-            var author = await _context.Authors.FindAsync(id);
+            var author = await _context.Authors
+                                        .Include(x => x.Books)
+                                            .ThenInclude(x => x.Categories)
+                                                .ThenInclude(x => x.Category)
+                                        .Include(x => x.Books)
+                                            .ThenInclude(x => x.Subcategories)
+                                                .ThenInclude(x => x.Subcategory)
+                                        .Include(x => x.Books)
+                                            .ThenInclude(x => x.Shelves)
+                                                .ThenInclude(x => x.Shelf)
+                                        .Include(x => x.Categories)
+                                            .ThenInclude(x => x.Category)
+                                        .Include(x => x.Subcategories)
+                                            .ThenInclude(x => x.Subcategory)
+                                        .Include(x => x.Shelves)
+                                            .ThenInclude(x => x.Shelf)
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(x => x.Id == id);
 
             if (author == null)
             {

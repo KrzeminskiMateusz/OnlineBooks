@@ -16,6 +16,8 @@ namespace OnlineBooksApi.Models
 
         public bool IsAvelibleForAuthor { get; set; }
 
+        public bool IsAvelibleForBook { get; set; }
+
 #nullable enable
         public IEnumerable<ShelfBookAssigment>? Books { get; set; }
         public IEnumerable<ShelftAuthorAssigment>? Authors { get; set; }

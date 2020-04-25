@@ -211,6 +211,9 @@ namespace OnlineBooksApi.Migrations
                     b.Property<bool>("IsAvelibleForAuthor")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsAvelibleForBook")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")

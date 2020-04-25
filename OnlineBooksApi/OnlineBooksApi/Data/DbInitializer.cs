@@ -420,12 +420,12 @@ namespace OnlineBooksApi.Data
 
             var shelves = new Shelf[]
             {
-                new Shelf{Name = "Przeczytane" , IsAvelibleForAuthor = false},
-                new Shelf{Name = "Teraz czytam", IsAvelibleForAuthor = false},
-                new Shelf{Name = "Chcę przeczytać", IsAvelibleForAuthor = false},
-                new Shelf{Name = "Chcę w prezencie", IsAvelibleForAuthor = false},
-                new Shelf{Name = "Posiadam", IsAvelibleForAuthor = false},
-                new Shelf{Name = "Ulubione", IsAvelibleForAuthor = true}
+                new Shelf{Name = "Przeczytane" , IsAvelibleForAuthor = false, IsAvelibleForBook = true},
+                new Shelf{Name = "Teraz czytam", IsAvelibleForAuthor = false, IsAvelibleForBook = true},
+                new Shelf{Name = "Chcę przeczytać", IsAvelibleForAuthor = false, IsAvelibleForBook = true},
+                new Shelf{Name = "Chcę w prezencie", IsAvelibleForAuthor = false, IsAvelibleForBook = true},
+                new Shelf{Name = "Posiadam", IsAvelibleForAuthor = false, IsAvelibleForBook = true},
+                new Shelf{Name = "Ulubione", IsAvelibleForAuthor = true, IsAvelibleForBook = true}
             };
 
             foreach (Shelf shelf in shelves)

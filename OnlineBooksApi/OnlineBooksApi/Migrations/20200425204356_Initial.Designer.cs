@@ -10,7 +10,7 @@ using OnlineBooksApi.Data;
 namespace OnlineBooksApi.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20200425195923_Initial")]
+    [Migration("20200425204356_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -211,6 +211,9 @@ namespace OnlineBooksApi.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("IsAvelibleForAuthor")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAvelibleForBook")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")

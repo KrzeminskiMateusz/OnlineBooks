@@ -51,7 +51,8 @@ namespace OnlineBooksApi.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
-                    IsAvelibleForAuthor = table.Column<bool>(nullable: false)
+                    IsAvelibleForAuthor = table.Column<bool>(nullable: false),
+                    IsAvelibleForBook = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
