@@ -11,7 +11,7 @@ namespace OnlineBooksApi.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 2)]
+        [StringLength(100, MinimumLength = 2)]
         public string Name { get; set; }
 #nullable enable
         public IEnumerable<CategorySubcategoryAssigment>? Categories { get; set; }

@@ -158,7 +158,7 @@ namespace OnlineBooksApi.Data
                 + @"Igła - pięknie, nitka - brzydko.\n"
                 + @"\n"
                 + @"Igła cała jak z igiełki,\n"
-                + @"Nitce plączą się supełki.\n"    
+                + @"Nitce plączą się supełki.\n"
                 + @"\n"
                 + @"Igła naprzód - nitka za nią:\n"
                 +@"„Ach, jak cudnie tańczyć z panią!”\n"
@@ -329,6 +329,234 @@ namespace OnlineBooksApi.Data
             foreach (Book book in books)
             {
                 context.Books.Add(book);
+            }
+            context.SaveChanges();
+
+            var categories = new Category[]
+            {
+                new Category{Name = "Beletrystyka"},
+                new Category{Name = "Literatura faktu, publicystyka"},
+                new Category{Name = "Literatura popularnonaukowa"},
+                new Category{Name = "Literatura dziecięca"},
+                new Category{Name = "Komiksy"},
+                new Category{Name = "Poezja, dramat, satyra"},
+                new Category{Name = "Pozostałe"},
+            };
+
+            foreach (Category category in categories)
+            {
+                context.Categories.Add(category);
+            }
+            context.SaveChanges();
+
+            var subcategories = new Subcategory[]
+            {
+                new Subcategory{Name = "fantastyka, fantasy, science fiction"},
+                new Subcategory{Name = "literatura obyczajowa, romans"},
+                new Subcategory{Name = "horror"},
+                new Subcategory{Name = "klasyka"},
+                new Subcategory{Name = "kryminał, sensacja, thriller"},
+                new Subcategory{Name = "literatura młodzieżowa"},
+                new Subcategory{Name = "literatura piękna"},
+                new Subcategory{Name = "powieść historyczna"},
+                new Subcategory{Name = "powieść przygodowa"},
+                new Subcategory{Name = "biografia, autobiografia, pamiętnik"},
+                new Subcategory{Name = "literatura faktu"},
+                new Subcategory{Name = "literatura podróżnicza"},
+                new Subcategory{Name = "publicystyka literacka, eseje"},
+                new Subcategory{Name = "astronomia, astrofizyka"},
+                new Subcategory{Name = "biznes, finanse"},
+                new Subcategory{Name = "encyklopedie, słowniki"},
+                new Subcategory{Name = "ezoteryka, senniki, horoskopy"},
+                new Subcategory{Name = "filozofia, etyka"},
+                new Subcategory{Name = "flora i fauna"},
+                new Subcategory{Name = "historia"},
+                new Subcategory{Name = "informatyka, matematyka"},
+                new Subcategory{Name = "językoznawstwo, nauka o literaturze"},
+                new Subcategory{Name = "nauki przyrodnicze (fizyka, chemia, biologia, itd.)"},
+                new Subcategory{Name = "nauki społeczne (psychologia, socjologia, itd.)"},
+                new Subcategory{Name = "popularnonaukowa"},
+                new Subcategory{Name = "poradniki"},
+                new Subcategory{Name = "poradniki dla rodziców"},
+                new Subcategory{Name = "technika"},
+                new Subcategory{Name = "bajki"},
+                new Subcategory{Name = "baśnie, legendy, podania"},
+                new Subcategory{Name = "historie biblijne"},
+                new Subcategory{Name = "interaktywne, obrazkowe, edukacyjne"},
+                new Subcategory{Name = "literatura dziecięca"},
+                new Subcategory{Name = "opowiadania, powieści"},
+                new Subcategory{Name = "opowieści dla młodszych dzieci"},
+                new Subcategory{Name = "popularnonaukowa dziecięca"},
+                new Subcategory{Name = "pozostałe"},
+                new Subcategory{Name = "wierszyki, piosenki"},
+                new Subcategory{Name = "komiksy"},
+                new Subcategory{Name = "poezja"},
+                new Subcategory{Name = "satyra"},
+                new Subcategory{Name = "utwór dramatyczny (dramat, komedia, tragedia)"},//
+                new Subcategory{Name = "albumy"},
+                new Subcategory{Name = "czasopisma"},
+                new Subcategory{Name = "film, kino, telewizja"},
+                new Subcategory{Name = "hobby"},
+                new Subcategory{Name = "inne"},
+                new Subcategory{Name = "kulinaria, przepisy kulinarne"},
+                new Subcategory{Name = "militaria, wojskowość"},
+                new Subcategory{Name = "motoryzacja"},
+                new Subcategory{Name = "muzyka"},
+                new Subcategory{Name = "religia"},
+                new Subcategory{Name = "rękodzieło"},
+                new Subcategory{Name = "rozrywka"},
+                new Subcategory{Name = "sport"},
+                new Subcategory{Name = "sztuka"},
+                new Subcategory{Name = "teatr"},
+                new Subcategory{Name = "turystyka, mapy, atlasy"},
+                new Subcategory{Name = "zdrowie, medycyna"}
+            };
+
+            foreach (Subcategory subcategory in subcategories)
+            {
+                context.Subcategories.Add(subcategory);
+            }
+            context.SaveChanges();
+
+            var shelves = new Shelf[]
+            {
+                new Shelf{Name = "Przeczytane"},
+                new Shelf{Name = "Teraz czytam"},
+                new Shelf{Name = "Chcę przeczytać"},
+                new Shelf{Name = "Chcę w prezencie"},
+                new Shelf{Name = "Posiadam"},
+                new Shelf{Name = "Ulubione"}
+            };
+
+            foreach (Shelf shelf in shelves)
+            {
+                context.Shelves.Add(shelf);
+            }
+            context.SaveChanges();
+
+            var categorySubcategoryAssigments = new CategorySubcategoryAssigment[]
+            {
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Beletrystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "fantastyka, fantasy, science fiction").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Beletrystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "literatura obyczajowa, romans").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Beletrystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "horror").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Beletrystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "klasyka").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Beletrystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "kryminał, sensacja, thriller").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Beletrystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "literatura młodzieżowa").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Beletrystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "literatura piękna").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Beletrystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "powieść przygodowa").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura faktu, publicystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "biografia, autobiografia, pamiętnik").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura faktu, publicystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "literatura faktu").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura faktu, publicystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "literatura podróżnicza").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura faktu, publicystyka").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "publicystyka literacka, eseje").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "astronomia, astrofizyka").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "biznes, finanse").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "encyklopedie, słowniki").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "ezoteryka, senniki, horoskopy").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "filozofia, etyka").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "flora i fauna").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "historia").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "informatyka, matematyka").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "językoznawstwo, nauka o literaturze").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "nauki przyrodnicze (fizyka, chemia, biologia, itd.)").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "nauki społeczne (psychologia, socjologia, itd.)").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "popularnonaukowa").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "poradniki").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "poradniki dla rodziców").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura popularnonaukowa").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "technika").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura dziecięca").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "bajki").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura dziecięca").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "baśnie, legendy, podania").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura dziecięca").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "historie biblijne").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura dziecięca").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "interaktywne, obrazkowe, edukacyjne").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura dziecięca").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "literatura dziecięca").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura dziecięca").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "opowiadania, powieści").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura dziecięca").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "opowieści dla młodszych dzieci").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura dziecięca").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "popularnonaukowa dziecięca").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura dziecięca").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "pozostałe").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Literatura dziecięca").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "wierszyki, piosenki").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Komiksy").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "komiksy").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Poezja, dramat, satyra").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "poezja").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Poezja, dramat, satyra").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "satyra").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Poezja, dramat, satyra").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "utwór dramatyczny (dramat, komedia, tragedia)").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "albumy").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "czasopisma").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "film, kino, telewizja").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "hobby").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "inne").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "kulinaria, przepisy kulinarne").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "militaria, wojskowość").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "motoryzacja").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "muzyka").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "religia").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "rękodzieło").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "rozrywka").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "sport").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "sztuka").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "teatr").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "turystyka, mapy, atlasy").Id},
+                new CategorySubcategoryAssigment {CategoryId = categories.Single(x => x.Name == "Pozostałe").Id,
+                    SubcategoryId= subcategories.Single(x => x.Name == "zdrowie, medycyna").Id},
+            };
+
+            foreach (CategorySubcategoryAssigment categorySubcategoryAssigment in categorySubcategoryAssigments)
+            {
+                context.CategorySubcategoryAssigments.Add(categorySubcategoryAssigment);
             }
             context.SaveChanges();
         }
