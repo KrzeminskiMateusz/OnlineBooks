@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using OnlineBooksApi.Data;
 using OnlineBooksApi.Models;
 
@@ -25,9 +26,26 @@ namespace OnlineBooksApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
-            return await _context.Authors.ToListAsync();
+            //return await _context.Authors.ToListAsync();
 
-            
+            return await _context.Authors
+                                        .Include(x => x.Books)
+                                            .ThenInclude(x => x.Categories)
+                                                .ThenInclude(x => x.Category)
+                                        .Include(x => x.Books)
+                                            .ThenInclude(x => x.Subcategories)
+                                                .ThenInclude(x => x.Subcategory)
+                                        .Include(x => x.Books)
+                                            .ThenInclude(x => x.Shelves)
+                                                .ThenInclude(x => x.Shelf)
+                                        .Include(x => x.Categories)
+                                            .ThenInclude(x => x.Category)
+                                        .Include(x => x.Subcategories)
+                                            .ThenInclude(x => x.Subcategory)
+                                        .Include(x => x.Shelves)
+                                            .ThenInclude(x => x.Shelf)
+                                        .AsNoTracking()
+                                        .ToListAsync();
         }
 
         // GET: api/Authors/5
