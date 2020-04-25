@@ -17,8 +17,7 @@ namespace OnlineBooksApi.Models
         [StringLength(100, MinimumLength = 1)]
         public string? Title { get; set; }
 
-        [Required]
-        [StringLength(1500, MinimumLength = 1)]
+        [StringLength(2000, MinimumLength = 1)]
         public string? Description { get; set; }
 
         public byte[]? Cover { get; set; }
