@@ -1,2 +1,2 @@
 # OnlineBooksApi
-Creating api for library and book shop
+Creating api for library.
