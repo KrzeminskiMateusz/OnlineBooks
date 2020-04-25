@@ -14,8 +14,10 @@ namespace OnlineBooksApi.Models
         [StringLength(100, MinimumLength = 2)]
         public string Name { get; set; }
 
+        public bool IsAvelibleForAuthor { get; set; }
+
 #nullable enable
-       public IEnumerable<ShelfBookAssigment>? Books { get; set; }
+        public IEnumerable<ShelfBookAssigment>? Books { get; set; }
         public IEnumerable<ShelftAuthorAssigment>? Authors { get; set; }
 #nullable disable
     }

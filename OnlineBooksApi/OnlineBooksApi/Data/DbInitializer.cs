@@ -180,7 +180,7 @@ namespace OnlineBooksApi.Data
                 Description="Czym jest ta książka? Zbiorem szkiców. Sprawozdaniem z podróży. Pierwsza podróż realna po miastach, muzeach i ruinach. Druga poprzez książki dotyczące widzianych miejsc. Te dwa widzenia, czy dwie metody, przeplatają się ze sobą."},
                 new Book{Title="Martwa natura z wędzidłem ", AuthorId = authors.Single(x => x.LastName == "Herbert").Id, PublcationDate=DateTime.Parse("01/01/1993"), NumberOfPages = 150  ,
                 Description="„Martwa natura z wędzidłem”, ostatni tom szkiców, który ukazał się za życia autora, wraz z „Labiryntem nad morzem” i „Barbarzyńcą w ogrodzie” tworzy trylogię - niezwykłą opowieść o „złotych wiekach” sztuki i cywilizacji europejskiej."},
-                new Book{Title="Cesarz ", AuthorId = authors.Single(x => x.LastName == "Kapuściński").Id, PublcationDate=DateTime.Parse("01/01/1980"), NumberOfPages = 172  ,
+                new Book{Title="Cesarz", AuthorId = authors.Single(x => x.LastName == "Kapuściński").Id, PublcationDate=DateTime.Parse("01/01/1980"), NumberOfPages = 172  ,
                 Description=@"Jeden z największych bestsellerów światowych. Przedmiotem reportażu-powieści są ludzie dworu cesarza Etiopii Hajle Sellasje zmarłego w 1975 roku. Ukazując ich służalczość, lizusostwo, strach, pazerność, uległość oraz walkę o względy władcy, Kapusciński w mistrzowski sposób przedstawia ponure kulisy jego panowania. Książka ma uniwersalny charakter, obnaża mechanizmy władzy nie tylko politycznej. Cesarzem Ryszard Kapuściński rozpoczął karierę międzynarodowa i nadał reportażowi wymiar literacki.\n"
                 + @"\n"
                 + @"23 stycznia 2017 roku minie 10. rocznica śmierci Ryszarda Kapuścińskiego, wybitnego pisarza, reportażysty o światowej sławie, poety i publicysty.\n"
@@ -392,7 +392,7 @@ namespace OnlineBooksApi.Data
                 new Subcategory{Name = "komiksy"},
                 new Subcategory{Name = "poezja"},
                 new Subcategory{Name = "satyra"},
-                new Subcategory{Name = "utwór dramatyczny (dramat, komedia, tragedia)"},//
+                new Subcategory{Name = "utwór dramatyczny (dramat, komedia, tragedia)"},
                 new Subcategory{Name = "albumy"},
                 new Subcategory{Name = "czasopisma"},
                 new Subcategory{Name = "film, kino, telewizja"},
@@ -420,12 +420,12 @@ namespace OnlineBooksApi.Data
 
             var shelves = new Shelf[]
             {
-                new Shelf{Name = "Przeczytane"},
-                new Shelf{Name = "Teraz czytam"},
-                new Shelf{Name = "Chcę przeczytać"},
-                new Shelf{Name = "Chcę w prezencie"},
-                new Shelf{Name = "Posiadam"},
-                new Shelf{Name = "Ulubione"}
+                new Shelf{Name = "Przeczytane" , IsAvelibleForAuthor = false},
+                new Shelf{Name = "Teraz czytam", IsAvelibleForAuthor = false},
+                new Shelf{Name = "Chcę przeczytać", IsAvelibleForAuthor = false},
+                new Shelf{Name = "Chcę w prezencie", IsAvelibleForAuthor = false},
+                new Shelf{Name = "Posiadam", IsAvelibleForAuthor = false},
+                new Shelf{Name = "Ulubione", IsAvelibleForAuthor = true}
             };
 
             foreach (Shelf shelf in shelves)
@@ -557,6 +557,75 @@ namespace OnlineBooksApi.Data
             foreach (CategorySubcategoryAssigment categorySubcategoryAssigment in categorySubcategoryAssigments)
             {
                 context.CategorySubcategoryAssigments.Add(categorySubcategoryAssigment);
+            }
+            context.SaveChanges();
+
+            var autrorCategoryAssigments = new AuthorCategoryAssigment[]
+            {
+                new AuthorCategoryAssigment{ AuthorId = authors.Single(x => x.LastName == "Kapuściński").Id, CategoryId = categories.Single(x => x.Name == "Literatura faktu, publicystyka").Id}
+            };
+
+            foreach (AuthorCategoryAssigment autrorCategoryAssigment in autrorCategoryAssigments)
+            {
+                context.AuthorCategoryAssigments.Add(autrorCategoryAssigment);
+            }
+            context.SaveChanges();
+
+            var authorSubcategoryAssigments = new AuthorSubcategoryAssigment[]
+            {
+                new AuthorSubcategoryAssigment {AuthorId = authors.Single(x => x.LastName =="Kapuściński").Id, SubcategoryId = subcategories.Single(x => x.Name == "literatura faktu").Id},
+                new AuthorSubcategoryAssigment {AuthorId = authors.Single(x => x.LastName =="Kapuściński").Id, SubcategoryId = subcategories.Single(x => x.Name == "literatura podróżnicza").Id}
+            };
+
+            foreach (AuthorSubcategoryAssigment authorSubcategoryAssigment in authorSubcategoryAssigments)
+            {
+                context.AuthorSubcategoryAssigments.Add(authorSubcategoryAssigment);
+            }
+            context.SaveChanges();
+
+            var shelfAuthorAssigments = new ShelftAuthorAssigment[]
+            {
+                new ShelftAuthorAssigment{ShelfId= shelves.Single(x => x.Name == "Ulubione").Id, AuthorId = authors.Single(x => x.LastName =="Kapuściński").Id}
+            };
+
+            foreach (ShelftAuthorAssigment shelfAuthorAssigment in shelfAuthorAssigments)
+            {
+                context.ShelftAuthorAssigments.Add(shelfAuthorAssigment);
+            }
+            context.SaveChanges();
+
+            var bookCategoryAssigments = new BookCategoryAssigment[]
+            {
+                new BookCategoryAssigment{BookId = books.Single(x => x.Title == "Cesarz").Id, CategoryId = categories.Single(x => x.Name == "Literatura faktu, publicystyka").Id}
+            };
+
+            foreach (BookCategoryAssigment bookCategoryAssigment in bookCategoryAssigments)
+            {
+                context.BookCategoryAssigments.Add(bookCategoryAssigment);
+            }
+            context.SaveChanges();
+
+            var bookSubcategoryAssigments = new BookSubcategoryAssigment[]
+            {
+                new BookSubcategoryAssigment{BookId = books.Single(x => x.Title == "Cesarz").Id, SubcategoryId = subcategories.Single(x => x.Name == "literatura faktu").Id},
+                new BookSubcategoryAssigment{BookId = books.Single(x => x.Title == "Cesarz").Id, SubcategoryId = subcategories.Single(x => x.Name == "literatura podróżnicza").Id},
+            };
+
+            foreach (BookSubcategoryAssigment bookSubcategoryAssigment in bookSubcategoryAssigments)
+            {
+                context.BookSubcategoryAssigments.Add(bookSubcategoryAssigment);
+            }
+            context.SaveChanges();
+
+            var shelfBookAssigments = new ShelfBookAssigment[]
+            {
+                new ShelfBookAssigment{ShelfId = shelves.Single(x => x.Name == "Przeczytane").Id, BookId = books.Single(x => x.Title == "Cesarz").Id},
+                new ShelfBookAssigment{ShelfId = shelves.Single(x => x.Name == "Posiadam").Id, BookId = books.Single(x => x.Title == "Cesarz").Id},
+            };
+
+            foreach (ShelfBookAssigment shelfBookAssigment in shelfBookAssigments)
+            {
+                context.ShelfBookAssigments.Add(shelfBookAssigment);
             }
             context.SaveChanges();
         }

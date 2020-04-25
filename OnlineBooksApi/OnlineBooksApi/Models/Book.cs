@@ -32,7 +32,9 @@ namespace OnlineBooksApi.Models
 
         public Author? Author { get; set; }
 
-        public IEnumerable<BookCategoryAssigment>? BookCategoryAssigments { get; set; }
+        public IEnumerable<BookCategoryAssigment>? Categories { get; set; }
+
+        public IEnumerable<BookSubcategoryAssigment>? Subcategories { get; set; }
 
         public IEnumerable<ShelfBookAssigment>? Shelves { get; set; }
 

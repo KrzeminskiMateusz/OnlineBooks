@@ -23,7 +23,8 @@ namespace OnlineBooksApi.Migrations
                     PlaceOfDeath = table.Column<string>(maxLength: 50, nullable: true),
                     CountryOfDeath = table.Column<string>(maxLength: 50, nullable: true),
                     Description = table.Column<string>(maxLength: 2000, nullable: true),
-                    Image = table.Column<byte[]>(nullable: true)
+                    Image = table.Column<byte[]>(nullable: true),
+                    IsAlive = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -36,7 +37,7 @@ namespace OnlineBooksApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
+                    Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,7 +50,8 @@ namespace OnlineBooksApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 100, nullable: false)
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    IsAvelibleForAuthor = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,7 +64,7 @@ namespace OnlineBooksApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
+                    Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,9 +77,11 @@ namespace OnlineBooksApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(maxLength: 100, nullable: false),
-                    Description = table.Column<string>(maxLength: 1500, nullable: false),
+                    Title = table.Column<string>(maxLength: 100, nullable: true),
+                    Description = table.Column<string>(maxLength: 2000, nullable: true),
                     Cover = table.Column<byte[]>(nullable: true),
+                    PublcationDate = table.Column<DateTime>(type: "date", nullable: false),
+                    NumberOfPages = table.Column<int>(nullable: true),
                     AuthorId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -140,6 +144,30 @@ namespace OnlineBooksApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AuthorSubcategoryAssigment",
+                columns: table => new
+                {
+                    AuthorId = table.Column<int>(nullable: false),
+                    SubcategoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthorSubcategoryAssigment", x => new { x.AuthorId, x.SubcategoryId });
+                    table.ForeignKey(
+                        name: "FK_AuthorSubcategoryAssigment_Author_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Author",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AuthorSubcategoryAssigment_Subcategory_SubcategoryId",
+                        column: x => x.SubcategoryId,
+                        principalTable: "Subcategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CategorySubcategoryAssigment",
                 columns: table => new
                 {
@@ -188,6 +216,30 @@ namespace OnlineBooksApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookSubcategoryAssigment",
+                columns: table => new
+                {
+                    BookId = table.Column<int>(nullable: false),
+                    SubcategoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookSubcategoryAssigment", x => new { x.BookId, x.SubcategoryId });
+                    table.ForeignKey(
+                        name: "FK_BookSubcategoryAssigment_Book_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Book",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookSubcategoryAssigment_Subcategory_SubcategoryId",
+                        column: x => x.SubcategoryId,
+                        principalTable: "Subcategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShelfBookAssigment",
                 columns: table => new
                 {
@@ -217,6 +269,11 @@ namespace OnlineBooksApi.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AuthorSubcategoryAssigment_SubcategoryId",
+                table: "AuthorSubcategoryAssigment",
+                column: "SubcategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Book_AuthorId",
                 table: "Book",
                 column: "AuthorId");
@@ -225,6 +282,11 @@ namespace OnlineBooksApi.Migrations
                 name: "IX_BookCategoryAssigment_CategoryId",
                 table: "BookCategoryAssigment",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookSubcategoryAssigment_SubcategoryId",
+                table: "BookSubcategoryAssigment",
+                column: "SubcategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategorySubcategoryAssigment_SubcategoryId",
@@ -248,7 +310,13 @@ namespace OnlineBooksApi.Migrations
                 name: "AuthorCategoryAssigment");
 
             migrationBuilder.DropTable(
+                name: "AuthorSubcategoryAssigment");
+
+            migrationBuilder.DropTable(
                 name: "BookCategoryAssigment");
+
+            migrationBuilder.DropTable(
+                name: "BookSubcategoryAssigment");
 
             migrationBuilder.DropTable(
                 name: "CategorySubcategoryAssigment");
