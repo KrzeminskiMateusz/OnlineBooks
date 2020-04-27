@@ -16,15 +16,6 @@ namespace OnlineBooksApi.Models.DTO
         [StringLength(50, MinimumLength = 2)]
         public string? LastName { get; set; }
 
-        [JsonIgnore]
-        public string? FullName
-        {
-            get
-            {
-                return FirstName + " " + LastName;
-            }
-        }
-
         [StringLength(50, MinimumLength = 2)]
         public string? Nationality { get; set; }
 

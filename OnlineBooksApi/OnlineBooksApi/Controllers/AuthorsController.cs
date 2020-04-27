@@ -83,7 +83,9 @@ namespace OnlineBooksApi.Controllers
                 return NotFound();
             }
 
-            return author;
+            var authorsDTO = _mapper.Map<AuthorDTO>(author);
+
+            return CreatedAtAction("GetAuthors", authorsDTO);
         }
 
         // PUT: api/Authors/5
@@ -121,26 +123,19 @@ namespace OnlineBooksApi.Controllers
         [HttpPost]
         public async Task<ActionResult<AuthorDTO>> PostAuthor(AuthorDTO authorDTO)
         {
-            //_context.Authors.Add(author);
-            //await _context.SaveChangesAsync();
+            var authors = await _context.Authors.AsNoTracking().ToListAsync();
 
-            //return CreatedAtAction("GetAuthor", new { id = author.Id }, author);
-
-            var newAuthor = new Author();
-
-            if (await TryUpdateModelAsync<Author>(
-                newAuthor,
-                "",
-                x => x.FirstName, x => x.LastName, x => x.Nationality, x => x.DataOfBirth, x => x.PlaceOfBirth, x => x.CountryOfBirth,
-                x => x.DateOfDeath, x => x.PlaceOfDeath, x => x.CountryOfDeath, x => x.Description, x => x.Image, x => x.IsAlive))
+            if (authors.Any(x => x.LastName == authorDTO.LastName))
             {
-                _context.Authors.Add(newAuthor);
-                await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetAuthor", new { id = newAuthor.Id }, authorDTO);
             }
 
-            return null;
+            var author = _mapper.Map<Author>(authorDTO);
+
+            _context.Authors.Add(author);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetAuthor", new { id = author.Id }, authorDTO);
         }
 
         // DELETE: api/Authors/5

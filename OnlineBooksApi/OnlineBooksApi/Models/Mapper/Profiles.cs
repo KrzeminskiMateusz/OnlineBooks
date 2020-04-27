@@ -12,6 +12,7 @@ namespace OnlineBooksApi.Models.Mapper
         public Profiles()
         {
             CreateMap<Author, AuthorDTO>();
+            CreateMap<AuthorDTO, Author>();
         }     
     }
 }
