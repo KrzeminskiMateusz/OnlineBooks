@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OnlineBooksApi.Models.DTO.Author;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -44,13 +45,13 @@ namespace OnlineBooksApi.Models.DTO
 
         public bool? IsAlive { get; set; }
 
-        public IEnumerable<AuthorCategoryAssigment>? Categories { get; set; }
+        public IEnumerable<CategoryAssigmentDTO>? Categories { get; set; }
 
-        public IEnumerable<AuthorSubcategoryAssigment>? Subcategories { get; set; }
+        public IEnumerable<SubcategoryAssigmentDTO>? Subcategories { get; set; }
 
-        public IEnumerable<ShelftAuthorAssigment>? Shelves { get; set; }
+        public IEnumerable<ShelftAssigmentDTO>? Shelves { get; set; }
 
-        public IEnumerable<Book>? Books { get; set; }
+        public IEnumerable<AuthorBooksDTO>? Books { get; set; }
 #nullable disable
     }
 }

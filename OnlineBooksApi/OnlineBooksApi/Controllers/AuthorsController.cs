@@ -32,24 +32,7 @@ namespace OnlineBooksApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAuthors()
         {
-            var authors = await _context.Authors
-                                          .Include(x => x.Books)
-                                                .ThenInclude(x => x.Categories)
-                                                .ThenInclude(x => x.Category)
-                                         .Include(x => x.Books)
-                                            .ThenInclude(x => x.Subcategories)
-                                                .ThenInclude(x => x.Subcategory)
-                                         .Include(x => x.Books)
-                                            .ThenInclude(x => x.Shelves)
-                                                .ThenInclude(x => x.Shelf)
-                                         .Include(x => x.Categories)
-                                            .ThenInclude(x => x.Category)
-                                         .Include(x => x.Subcategories)
-                                            .ThenInclude(x => x.Subcategory)
-                                         .Include(x => x.Shelves)
-                                            .ThenInclude(x => x.Shelf)
-                                         .AsNoTracking()
-                                         .ToListAsync();
+            var authors = await LoadAuthorsAsync();
 
             var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
 
@@ -60,50 +43,7 @@ namespace OnlineBooksApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Author>> GetAuthor(int id)
         {
-            var author = await _context.Authors
-                                        .Include(x => x.Books)
-                                            .ThenInclude(x => x.Categories)
-                                                .ThenInclude(x => x.Category)
-                                        .Include(x => x.Books)
-                                            .ThenInclude(x => x.Subcategories)
-                                                .ThenInclude(x => x.Subcategory)
-                                        .Include(x => x.Books)
-                                            .ThenInclude(x => x.Shelves)
-                                                .ThenInclude(x => x.Shelf)
-                                        .Include(x => x.Categories)
-                                            .ThenInclude(x => x.Category)
-                                        .Include(x => x.Subcategories)
-                                            .ThenInclude(x => x.Subcategory)
-                                        .Include(x => x.Shelves)
-                                            .ThenInclude(x => x.Shelf)
-                                        .AsNoTracking()
-                                        .FirstOrDefaultAsync(x => x.Id == id);
-
-
-            if (author == null)
-            {
-                return NotFound();
-            }
-
-            foreach (var item in author.Books)
-            {
-                item.Author = null;
-            }
-
-            foreach (var item in author.Categories)
-            {
-                item.Author = null;
-            }
-
-            foreach (var item in author.Subcategories)
-            {
-                item.Author = null;
-            }
-
-            foreach (var item in author.Shelves)
-            {
-                item.Author = null;
-            }
+            var author = await LoadAuthorAsync(id);
 
             var authorDTO = _mapper.Map<AuthorDTO>(author);
 
@@ -139,24 +79,7 @@ namespace OnlineBooksApi.Controllers
                 return NotFound();
             }
 
-            author = await _context.Authors
-                                       .Include(x => x.Books)
-                                           .ThenInclude(x => x.Categories)
-                                               .ThenInclude(x => x.Category)
-                                       .Include(x => x.Books)
-                                           .ThenInclude(x => x.Subcategories)
-                                               .ThenInclude(x => x.Subcategory)
-                                       .Include(x => x.Books)
-                                           .ThenInclude(x => x.Shelves)
-                                               .ThenInclude(x => x.Shelf)
-                                       .Include(x => x.Categories)
-                                           .ThenInclude(x => x.Category)
-                                       .Include(x => x.Subcategories)
-                                           .ThenInclude(x => x.Subcategory)
-                                       .Include(x => x.Shelves)
-                                           .ThenInclude(x => x.Shelf)
-                                       .AsNoTracking()
-                                       .FirstOrDefaultAsync(x => x.Id == id);
+            author = await LoadAuthorAsync(id);
 
             authorDTO = _mapper.Map<AuthorDTO>(author);
 
@@ -178,24 +101,7 @@ namespace OnlineBooksApi.Controllers
             _context.Authors.Add(author);
             await _context.SaveChangesAsync();
 
-            author = await _context.Authors
-                                       .Include(x => x.Books)
-                                           .ThenInclude(x => x.Categories)
-                                               .ThenInclude(x => x.Category)
-                                       .Include(x => x.Books)
-                                           .ThenInclude(x => x.Subcategories)
-                                               .ThenInclude(x => x.Subcategory)
-                                       .Include(x => x.Books)
-                                           .ThenInclude(x => x.Shelves)
-                                               .ThenInclude(x => x.Shelf)
-                                       .Include(x => x.Categories)
-                                           .ThenInclude(x => x.Category)
-                                       .Include(x => x.Subcategories)
-                                           .ThenInclude(x => x.Subcategory)
-                                       .Include(x => x.Shelves)
-                                           .ThenInclude(x => x.Shelf)
-                                       .AsNoTracking()
-                                       .FirstOrDefaultAsync(x => x.Id == author.Id);
+            author = await LoadAuthorAsync(author.Id);
 
             authorDTO = _mapper.Map<AuthorDTO>(author);
 
@@ -224,6 +130,50 @@ namespace OnlineBooksApi.Controllers
         private bool AuthorExists(int id)
         {
             return _context.Authors.Any(e => e.Id == id);
+        }
+
+        private async Task<IEnumerable<Author>> LoadAuthorsAsync()
+        {
+            return await _context.Authors
+                                          .Include(x => x.Books)
+                                                .ThenInclude(x => x.Categories)
+                                                    .ThenInclude(x => x.Category)
+                                         .Include(x => x.Books)
+                                            .ThenInclude(x => x.Subcategories)
+                                                .ThenInclude(x => x.Subcategory)
+                                         .Include(x => x.Books)
+                                            .ThenInclude(x => x.Shelves)
+                                                .ThenInclude(x => x.Shelf)
+                                         .Include(x => x.Categories)
+                                            .ThenInclude(x => x.Category)
+                                         .Include(x => x.Subcategories)
+                                            .ThenInclude(x => x.Subcategory)
+                                         .Include(x => x.Shelves)
+                                            .ThenInclude(x => x.Shelf)
+                                         .AsNoTracking()
+                                         .ToListAsync();
+        }
+
+        private async Task<Author> LoadAuthorAsync(int id)
+        {
+            return await _context.Authors
+                                        .Include(x => x.Books)
+                                            .ThenInclude(x => x.Categories)
+                                                .ThenInclude(x => x.Category)
+                                        .Include(x => x.Books)
+                                            .ThenInclude(x => x.Subcategories)
+                                                .ThenInclude(x => x.Subcategory)
+                                        .Include(x => x.Books)
+                                            .ThenInclude(x => x.Shelves)
+                                                .ThenInclude(x => x.Shelf)
+                                        .Include(x => x.Categories)
+                                            .ThenInclude(x => x.Category)
+                                        .Include(x => x.Subcategories)
+                                            .ThenInclude(x => x.Subcategory)
+                                        .Include(x => x.Shelves)
+                                            .ThenInclude(x => x.Shelf)
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }
