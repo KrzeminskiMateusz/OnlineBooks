@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -31,7 +32,7 @@ namespace OnlineBooksApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAuthors()
         {
-            var authors =  await _context.Authors
+            var authors = await _context.Authors
                                           .Include(x => x.Books)
                                                 .ThenInclude(x => x.Categories)
                                                 .ThenInclude(x => x.Category)
@@ -78,56 +79,98 @@ namespace OnlineBooksApi.Controllers
                                         .AsNoTracking()
                                         .FirstOrDefaultAsync(x => x.Id == id);
 
+
             if (author == null)
             {
                 return NotFound();
             }
 
-            var authorsDTO = _mapper.Map<AuthorDTO>(author);
+            foreach (var item in author.Books)
+            {
+                item.Author = null;
+            }
 
-            return CreatedAtAction("GetAuthors", authorsDTO);
+            foreach (var item in author.Categories)
+            {
+                item.Author = null;
+            }
+
+            foreach (var item in author.Subcategories)
+            {
+                item.Author = null;
+            }
+
+            foreach (var item in author.Shelves)
+            {
+                item.Author = null;
+            }
+
+            var authorDTO = _mapper.Map<AuthorDTO>(author);
+
+            return CreatedAtAction("GetAuthors", authorDTO);
         }
 
         // PUT: api/Authors/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAuthor(int id, Author author)
+        public async Task<IActionResult> PutAuthor(int id, AuthorDTO authorDTO)
         {
-            if (id != author.Id)
+            var author = await _context.Authors.FindAsync(id);
+
+            if (author == null)
+            {
+                return NotFound();
+            }
+
+            var authors = await _context.Authors.ToListAsync();
+
+            if (authorDTO.LastName != null && authors.Any(x => x.LastName == authorDTO.LastName && x.Id != id))
             {
                 return BadRequest();
             }
 
-            _context.Entry(author).State = EntityState.Modified;
+            _mapper.Map<AuthorDTO, Author>(authorDTO, author);
 
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException) when (!AuthorExists(id))
             {
-                if (!AuthorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return NoContent();
+            author = await _context.Authors
+                                       .Include(x => x.Books)
+                                           .ThenInclude(x => x.Categories)
+                                               .ThenInclude(x => x.Category)
+                                       .Include(x => x.Books)
+                                           .ThenInclude(x => x.Subcategories)
+                                               .ThenInclude(x => x.Subcategory)
+                                       .Include(x => x.Books)
+                                           .ThenInclude(x => x.Shelves)
+                                               .ThenInclude(x => x.Shelf)
+                                       .Include(x => x.Categories)
+                                           .ThenInclude(x => x.Category)
+                                       .Include(x => x.Subcategories)
+                                           .ThenInclude(x => x.Subcategory)
+                                       .Include(x => x.Shelves)
+                                           .ThenInclude(x => x.Shelf)
+                                       .AsNoTracking()
+                                       .FirstOrDefaultAsync(x => x.Id == id);
+
+            authorDTO = _mapper.Map<AuthorDTO>(author);
+
+            return CreatedAtAction("GetAuthor", new { id = author.Id }, authorDTO);
         }
 
         [HttpPost]
         public async Task<ActionResult<AuthorDTO>> PostAuthor(AuthorDTO authorDTO)
         {
-            var authors = await _context.Authors.AsNoTracking().ToListAsync();
+            var authors = await _context.Authors.ToListAsync();
 
-            if (authors.Any(x => x.LastName == authorDTO.LastName))
+            if (authors.Any(x => x.LastName == authorDTO.LastName) && authorDTO.LastName != null)
             {
-
+                return BadRequest("This author has been existed already");
             }
 
             var author = _mapper.Map<Author>(authorDTO);
@@ -135,14 +178,36 @@ namespace OnlineBooksApi.Controllers
             _context.Authors.Add(author);
             await _context.SaveChangesAsync();
 
+            author = await _context.Authors
+                                       .Include(x => x.Books)
+                                           .ThenInclude(x => x.Categories)
+                                               .ThenInclude(x => x.Category)
+                                       .Include(x => x.Books)
+                                           .ThenInclude(x => x.Subcategories)
+                                               .ThenInclude(x => x.Subcategory)
+                                       .Include(x => x.Books)
+                                           .ThenInclude(x => x.Shelves)
+                                               .ThenInclude(x => x.Shelf)
+                                       .Include(x => x.Categories)
+                                           .ThenInclude(x => x.Category)
+                                       .Include(x => x.Subcategories)
+                                           .ThenInclude(x => x.Subcategory)
+                                       .Include(x => x.Shelves)
+                                           .ThenInclude(x => x.Shelf)
+                                       .AsNoTracking()
+                                       .FirstOrDefaultAsync(x => x.Id == author.Id);
+
+            authorDTO = _mapper.Map<AuthorDTO>(author);
+
             return CreatedAtAction("GetAuthor", new { id = author.Id }, authorDTO);
         }
 
         // DELETE: api/Authors/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Author>> DeleteAuthor(int id)
+        public async Task<ActionResult<AuthorDTO>> DeleteAuthor(int id)
         {
             var author = await _context.Authors.FindAsync(id);
+
             if (author == null)
             {
                 return NotFound();
@@ -151,7 +216,9 @@ namespace OnlineBooksApi.Controllers
             _context.Authors.Remove(author);
             await _context.SaveChangesAsync();
 
-            return author;
+            var authorDTO = _mapper.Map<AuthorDTO>(author);
+
+            return authorDTO;
         }
 
         private bool AuthorExists(int id)

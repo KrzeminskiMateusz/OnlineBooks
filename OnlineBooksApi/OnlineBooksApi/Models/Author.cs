@@ -55,8 +55,6 @@ namespace OnlineBooksApi.Models
         [StringLength(2000, MinimumLength = 10)]
         public string? Description { get; set; }
 
-        public string Secred { get; set; }
-
         public byte[]? Image { get; set; }
 
         public bool? IsAlive { get; set; }

@@ -42,7 +42,6 @@ namespace OnlineBooksApi.Data
             modelBuilder.Entity<CategorySubcategoryAssigment>().ToTable("CategorySubcategoryAssigment");
             modelBuilder.Entity<Subcategory>().ToTable("Subcategory");
 
-
             modelBuilder.Entity<AuthorCategoryAssigment>().HasKey(c => new { c.AuthorId, c.CategoryId });
             modelBuilder.Entity<BookCategoryAssigment>().HasKey(c => new { c.BookId, c.CategoryId });
             modelBuilder.Entity<ShelftAuthorAssigment>().HasKey(c => new { c.ShelfId, c.AuthorId });

@@ -32,7 +32,7 @@ namespace OnlineBooksApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
-            var book = await _context.Books.FindAsync(id);
+            var book = await _context.Books.Include(x => x.Author).FirstOrDefaultAsync(x => x.Id == id);
 
             if (book == null)
             {
