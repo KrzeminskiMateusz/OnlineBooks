@@ -1,2 +1,2 @@
 # OnlineBooksApi
-Creating api for library.
+Creating api for library with using .Net Core.
