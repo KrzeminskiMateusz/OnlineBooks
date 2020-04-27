@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using OnlineBooksApi.Data;
 using OnlineBooksApi.Models;
+using OnlineBooksApi.Models.DTO;
 
 namespace OnlineBooksApi.Controllers
 {
@@ -15,37 +18,41 @@ namespace OnlineBooksApi.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly LibraryContext _context;
 
-        public AuthorsController(LibraryContext context)
+        public AuthorsController(IMapper mapper, LibraryContext context)
         {
+            _mapper = mapper;
             _context = context;
         }
 
         // GET: api/Authors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
+        public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAuthors()
         {
-            //return await _context.Authors.ToListAsync();
-
-            return await _context.Authors
-                                        .Include(x => x.Books)
-                                            .ThenInclude(x => x.Categories)
+            var authors =  await _context.Authors
+                                          .Include(x => x.Books)
+                                                .ThenInclude(x => x.Categories)
                                                 .ThenInclude(x => x.Category)
-                                        .Include(x => x.Books)
+                                         .Include(x => x.Books)
                                             .ThenInclude(x => x.Subcategories)
                                                 .ThenInclude(x => x.Subcategory)
-                                        .Include(x => x.Books)
+                                         .Include(x => x.Books)
                                             .ThenInclude(x => x.Shelves)
                                                 .ThenInclude(x => x.Shelf)
-                                        .Include(x => x.Categories)
+                                         .Include(x => x.Categories)
                                             .ThenInclude(x => x.Category)
-                                        .Include(x => x.Subcategories)
+                                         .Include(x => x.Subcategories)
                                             .ThenInclude(x => x.Subcategory)
-                                        .Include(x => x.Shelves)
+                                         .Include(x => x.Shelves)
                                             .ThenInclude(x => x.Shelf)
-                                        .AsNoTracking()
-                                        .ToListAsync();
+                                         .AsNoTracking()
+                                         .ToListAsync();
+
+            var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
+
+            return CreatedAtAction("GetAuthors", authorsDTO);
         }
 
         // GET: api/Authors/5
@@ -111,16 +118,29 @@ namespace OnlineBooksApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Authors
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Author>> PostAuthor(Author author)
+        public async Task<ActionResult<AuthorDTO>> PostAuthor(AuthorDTO authorDTO)
         {
-            _context.Authors.Add(author);
-            await _context.SaveChangesAsync();
+            //_context.Authors.Add(author);
+            //await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAuthor", new { id = author.Id }, author);
+            //return CreatedAtAction("GetAuthor", new { id = author.Id }, author);
+
+            var newAuthor = new Author();
+
+            if (await TryUpdateModelAsync<Author>(
+                newAuthor,
+                "",
+                x => x.FirstName, x => x.LastName, x => x.Nationality, x => x.DataOfBirth, x => x.PlaceOfBirth, x => x.CountryOfBirth,
+                x => x.DateOfDeath, x => x.PlaceOfDeath, x => x.CountryOfDeath, x => x.Description, x => x.Image, x => x.IsAlive))
+            {
+                _context.Authors.Add(newAuthor);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetAuthor", new { id = newAuthor.Id }, authorDTO);
+            }
+
+            return null;
         }
 
         // DELETE: api/Authors/5

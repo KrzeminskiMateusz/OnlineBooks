@@ -1,20 +1,15 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OnlineBooksApi.Models
+namespace OnlineBooksApi.Models.DTO
 {
-    public class Author
+    public class AuthorDTO
     {
-        public int Id { get; set; }
 #nullable enable
-
         [StringLength(50, MinimumLength = 2)]
         public string? FirstName { get; set; }
 
@@ -34,7 +29,6 @@ namespace OnlineBooksApi.Models
         public string? Nationality { get; set; }
 
         [DataType(DataType.Date)]
-        [Column(TypeName = "date")]
         public DateTime? DataOfBirth { get; set; }
 
         [StringLength(50, MinimumLength = 2)]
@@ -44,7 +38,6 @@ namespace OnlineBooksApi.Models
         public string? CountryOfBirth { get; set; }
 
         [DataType(DataType.Date)]
-        [Column(TypeName = "date")]
         public DateTime? DateOfDeath { get; set; }
 
         [StringLength(50, MinimumLength = 2)]
@@ -59,8 +52,6 @@ namespace OnlineBooksApi.Models
         public byte[]? Image { get; set; }
 
         public bool? IsAlive { get; set; }
-
-        public string? Secred { get; set; }
 
         public IEnumerable<AuthorCategoryAssigment>? Categories { get; set; }
 
