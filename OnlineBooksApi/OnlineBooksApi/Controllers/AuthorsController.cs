@@ -36,7 +36,7 @@ namespace OnlineBooksApi.Controllers
 
             var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
 
-            return CreatedAtAction("GetAuthors", authorsDTO);
+            return Ok(authorsDTO);
         }
 
         // GET: api/Authors/5
@@ -47,7 +47,7 @@ namespace OnlineBooksApi.Controllers
 
             var authorDTO = _mapper.Map<AuthorDTO>(author);
 
-            return CreatedAtAction("GetAuthors", authorDTO);
+            return Ok(authorDTO);
         }
 
         // PUT: api/Authors/5
@@ -83,7 +83,7 @@ namespace OnlineBooksApi.Controllers
 
             authorDTO = _mapper.Map<AuthorDTO>(author);
 
-            return CreatedAtAction("GetAuthor", new { id = author.Id }, authorDTO);
+            return Ok(authorDTO);
         }
 
         [HttpPost]
@@ -124,7 +124,7 @@ namespace OnlineBooksApi.Controllers
 
             var authorDTO = _mapper.Map<AuthorDTO>(author);
 
-            return authorDTO;
+            return Ok(authorDTO);
         }
 
         private bool AuthorExists(int id)
