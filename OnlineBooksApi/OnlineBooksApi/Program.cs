@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 using OnlineBooksApi.Data;
 
 namespace OnlineBooksApi
@@ -15,7 +16,7 @@ namespace OnlineBooksApi
     {
         public static void Main(string[] args)
         {
-           var host = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build();
 
             CreateDbIfNotExist(host);
 
@@ -24,25 +25,23 @@ namespace OnlineBooksApi
 
         private static void CreateDbIfNotExist(IHost host)
         {
-            using(var scope = host.Services.CreateScope())
+            using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
 
-                try
-                {
-                    var context = services.GetRequiredService<LibraryContext>();
-                    DbInitializer.Initialize(context);
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred creating the DB.");
-                }
+                var context = services.GetRequiredService<LibraryContext>();
+                DbInitializer.Initialize(context);
             }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                 .ConfigureLogging((hostingContext, logging) =>
+                 {
+                     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                     logging.AddDebug();
+                     logging.AddNLog();
+                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

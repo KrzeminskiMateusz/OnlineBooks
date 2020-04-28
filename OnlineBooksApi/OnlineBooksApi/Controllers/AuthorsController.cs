@@ -8,6 +8,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OnlineBooksApi.Data;
 using OnlineBooksApi.Models;
@@ -22,10 +23,14 @@ namespace OnlineBooksApi.Controllers
         private readonly IMapper _mapper;
         private readonly LibraryContext _context;
 
-        public AuthorsController(IMapper mapper, LibraryContext context)
+        private readonly ILogger<AuthorsController> _logger;
+
+        public AuthorsController(IMapper mapper, LibraryContext context, ILogger<AuthorsController> logger)
         {
             _mapper = mapper;
             _context = context;
+            _logger = logger;
+            _logger.LogDebug(1, "NLog injected into HomeController");
         }
 
         // GET: api/Authors
@@ -36,6 +41,17 @@ namespace OnlineBooksApi.Controllers
 
             var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
 
+            _logger.LogInformation("Hello, this is the index!");
+
+            try
+            {
+                throw new Exception();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "To jest error");
+            }
+          
             return Ok(authorsDTO);
         }
 
