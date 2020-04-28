@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OnlineBooksApi.Data;
 using OnlineBooksApi.Models;
+using OnlineBooksApi.Models.DTO.Book;
 
 namespace OnlineBooksApi.Controllers
 {
@@ -14,97 +17,190 @@ namespace OnlineBooksApi.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
+        private readonly IMapper _mapper;
+        private readonly ILogger<BooksController> _logger;
         private readonly LibraryContext _context;
 
-        public BooksController(LibraryContext context)
+        public BooksController(IMapper mapper, ILogger<BooksController> logger, LibraryContext context)
         {
+            _mapper = mapper;
+            _logger = logger;
             _context = context;
         }
 
         // GET: api/Books
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+        public async Task<ActionResult<IEnumerable<BookDTO>>> GetBooks()
         {
-            return await _context.Books.ToListAsync();
+            try
+            {
+                var books = await LoadBooksAsync();
+
+                var booksDTO = _mapper.Map<IEnumerable<BookDTO>>(books);
+
+                return Ok(booksDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode GetBooks was throw exception");
+                return BadRequest();
+            }
         }
 
         // GET: api/Books/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Book>> GetBook(int id)
-        {
-            var book = await _context.Books.Include(x => x.Author).FirstOrDefaultAsync(x => x.Id == id);
-
-            if (book == null)
+        public async Task<ActionResult<BookDTO>> GetBook(int id)
+        {          
+            try
             {
-                return NotFound();
-            }
+                var book = await LoadBookAsync(id);
 
-            return book;
+                var bookDTO = _mapper.Map<BookDTO>(book);
+
+                return Ok(bookDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode GetBook was throw exception");
+                return BadRequest();
+            }
         }
 
         // PUT: api/Books/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBook(int id, Book book)
+        public async Task<IActionResult> PutBook(int id, BookDTO bookDTO)
         {
-            if (id != book.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(book).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BookExists(id))
+                var book = await _context.Books.FindAsync(id);
+
+                if (book == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                _mapper.Map<BookDTO, Book>(bookDTO, book);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException) when (!BookExists(id))
+                {
+                    return NotFound();
+                }
+
+                book = await LoadBookAsync(id);
+
+                bookDTO = _mapper.Map<BookDTO>(book);
+
+                return Ok(bookDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode PutBook was throw exception");
+                return BadRequest();
+            }
         }
 
         // POST: api/Books
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Book>> PostBook(Book book)
+        public async Task<ActionResult<BookDTO>> PostBook(BookDTO bookDTO)
         {
-            _context.Books.Add(book);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var book = _mapper.Map<Book>(bookDTO);
 
-            return CreatedAtAction("GetBook", new { id = book.Id }, book);
+                _context.Books.Add(book);
+                await _context.SaveChangesAsync();
+
+                book = await LoadBookAsync(book.Id);
+
+                bookDTO = _mapper.Map<BookDTO>(book);
+
+                return CreatedAtAction("GetBook", new { id = book.Id }, bookDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode PostBook was throw exception");
+                return BadRequest();
+            }
         }
 
         // DELETE: api/Books/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Book>> DeleteBook(int id)
+        public async Task<ActionResult<BookDTO>> DeleteBook(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            if (book == null)
+            try
             {
-                return NotFound();
+                var book = await _context.Books.FindAsync(id);
+
+                if (book == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Books.Remove(book);
+                await _context.SaveChangesAsync();
+
+                var bookDTO = _mapper.Map<BookDTO>(book);
+
+                return Ok(bookDTO);
             }
-
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
-
-            return book;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode DeleteBook was throw exception");
+                return BadRequest();
+            }
         }
 
         private bool BookExists(int id)
         {
             return _context.Books.Any(e => e.Id == id);
+        }
+
+        private async Task<IEnumerable<Book>> LoadBooksAsync()
+        {
+            return await _context.Books
+                                       .Include(x => x.Author)
+                                                .ThenInclude(x => x.Categories)
+                                                    .ThenInclude(x => x.Category)
+                                       .Include(x => x.Author)
+                                            .ThenInclude(x => x.Subcategories)
+                                                .ThenInclude(x => x.Subcategory)
+                                       .Include(x => x.Author)
+                                            .ThenInclude(x => x.Shelves)
+                                                .ThenInclude(x => x.Shelf)
+                                       .Include(x => x.Categories)
+                                            .ThenInclude(x => x.Category)
+                                       .Include(x => x.Subcategories)
+                                            .ThenInclude(x => x.Subcategory)
+                                       .Include(x => x.Shelves)
+                                            .ThenInclude(x => x.Shelf)
+                                       .AsNoTracking()
+                                       .ToListAsync();
+        }
+
+        private async Task<Book> LoadBookAsync(int id)
+        {
+            return await _context.Books
+                                       .Include(x => x.Author)
+                                            .ThenInclude(x => x.Categories)
+                                                .ThenInclude(x => x.Category)
+                                       .Include(x => x.Author)
+                                            .ThenInclude(x => x.Subcategories)
+                                                .ThenInclude(x => x.Subcategory)
+                                       .Include(x => x.Author)
+                                            .ThenInclude(x => x.Shelves)
+                                                .ThenInclude(x => x.Shelf)
+                                       .Include(x => x.Categories)
+                                            .ThenInclude(x => x.Category)
+                                       .Include(x => x.Subcategories)
+                                            .ThenInclude(x => x.Subcategory)
+                                       .Include(x => x.Shelves)
+                                            .ThenInclude(x => x.Shelf)
+                                       .AsNoTracking()
+                                       .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

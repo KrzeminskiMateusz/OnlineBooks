@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OnlineBooksApi.Models.DTO;
 using OnlineBooksApi.Models.DTO.Author;
+using OnlineBooksApi.Models.DTO.Book;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,10 @@ namespace OnlineBooksApi.Models.Mapper
         {
             CreateMap<Author, AuthorDTO>();
             CreateMap<AuthorDTO, Author>();
-            CreateMap<Book, AuthorBooksDTO>();          
+            CreateMap<Book, AuthorBooksDTO>();
+            CreateMap<Book, BookDTO>();
+            CreateMap<BookDTO, Book>();
+            CreateMap<Author, BookAuthorDTO>();
             CreateMap<AuthorCategoryAssigment, CategoryAssigmentDTO>();
             CreateMap<AuthorSubcategoryAssigment, SubcategoryAssigmentDTO>();
             CreateMap<ShelftAuthorAssigment, ShelftAssigmentDTO>();

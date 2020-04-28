@@ -1,14 +1,12 @@
-﻿using Newtonsoft.Json;
-using OnlineBooksApi.Models.DTO.Author;
+﻿using OnlineBooksApi.Models.DTO.Author;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OnlineBooksApi.Models.DTO
+namespace OnlineBooksApi.Models.DTO.Book
 {
-    public class AuthorDTO
+    public class BookAuthorDTO
     {
 #nullable enable
         public string? FirstName { get; set; }
@@ -40,9 +38,6 @@ namespace OnlineBooksApi.Models.DTO
         public IEnumerable<SubcategoryAssigmentDTO>? Subcategories { get; set; }
 
         public IEnumerable<ShelftAssigmentDTO>? Shelves { get; set; }
-
-        public IEnumerable<AuthorBooksDTO>? Books { get; set; }
 #nullable disable
     }
 }
-

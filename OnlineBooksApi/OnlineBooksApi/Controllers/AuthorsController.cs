@@ -21,126 +21,153 @@ namespace OnlineBooksApi.Controllers
     public class AuthorsController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly ILogger<AuthorsController> _logger;
         private readonly LibraryContext _context;
 
-        private readonly ILogger<AuthorsController> _logger;
-
-        public AuthorsController(IMapper mapper, LibraryContext context, ILogger<AuthorsController> logger)
+        public AuthorsController(IMapper mapper, ILogger<AuthorsController> logger, LibraryContext context)
         {
             _mapper = mapper;
             _context = context;
             _logger = logger;
-            _logger.LogDebug(1, "NLog injected into HomeController");
         }
 
         // GET: api/Authors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAuthors()
         {
-            var authors = await LoadAuthorsAsync();
-
-            var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
-
-            _logger.LogInformation("Hello, this is the index!");
-
             try
             {
-                throw new Exception();
+                var authors = await LoadAuthorsAsync();
+
+                var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
+
+                return Ok(authorsDTO);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "To jest error");
+                _logger.LogError(ex, "Methode GetAuthors was throw exception");
+                return BadRequest();
             }
-          
-            return Ok(authorsDTO);
         }
 
         // GET: api/Authors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Author>> GetAuthor(int id)
+        public async Task<ActionResult<AuthorDTO>> GetAuthor(int id)
         {
-            var author = await LoadAuthorAsync(id);
+            try
+            {
+                var author = await LoadAuthorAsync(id);
 
-            var authorDTO = _mapper.Map<AuthorDTO>(author);
+                var authorDTO = _mapper.Map<AuthorDTO>(author);
 
-            return Ok(authorDTO);
+                return Ok(authorDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode GetAuthor was throw exception");
+                return BadRequest();
+            }
         }
 
         // PUT: api/Authors/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAuthor(int id, AuthorDTO authorDTO)
         {
-            var author = await _context.Authors.FindAsync(id);
-
-            if (author == null)
-            {
-                return NotFound();
-            }
-
-            var authors = await _context.Authors.ToListAsync();
-
-            if (authorDTO.LastName != null && authors.Any(x => x.LastName == authorDTO.LastName && x.Id != id))
-            {
-                return BadRequest();
-            }
-
-            _mapper.Map<AuthorDTO, Author>(authorDTO, author);
-
             try
             {
-                await _context.SaveChangesAsync();
+                var author = await _context.Authors.FindAsync(id);
+
+                if (author == null)
+                {
+                    return NotFound();
+                }
+
+                var authors = await _context.Authors.ToListAsync();
+
+                if (authorDTO.LastName != null && authors.Any(x => x.LastName == authorDTO.LastName && x.Id != id))
+                {
+                    return BadRequest();
+                }
+
+                _mapper.Map<AuthorDTO, Author>(authorDTO, author);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException) when (!AuthorExists(id))
+                {
+                    return NotFound();
+                }
+
+                author = await LoadAuthorAsync(id);
+
+                authorDTO = _mapper.Map<AuthorDTO>(author);
+
+                return Ok(authorDTO);
             }
-            catch (DbUpdateConcurrencyException) when (!AuthorExists(id))
+            catch (Exception ex)
             {
-                return NotFound();
+                _logger.LogError(ex, "Methode PutAuthor was throw exception");
+                return BadRequest();
             }
-
-            author = await LoadAuthorAsync(id);
-
-            authorDTO = _mapper.Map<AuthorDTO>(author);
-
-            return Ok(authorDTO);
         }
 
         [HttpPost]
         public async Task<ActionResult<AuthorDTO>> PostAuthor(AuthorDTO authorDTO)
         {
-            var authors = await _context.Authors.ToListAsync();
-
-            if (authors.Any(x => x.LastName == authorDTO.LastName) && authorDTO.LastName != null)
+            try
             {
-                return BadRequest("This author has been existed already");
+                var authors = await _context.Authors.ToListAsync();
+
+                if (authors.Any(x => x.LastName == authorDTO.LastName) && authorDTO.LastName != null)
+                {
+                    return BadRequest("This author has been existed already");
+                }
+
+                var author = _mapper.Map<Author>(authorDTO);
+
+                _context.Authors.Add(author);
+                await _context.SaveChangesAsync();
+
+                author = await LoadAuthorAsync(author.Id);
+
+                authorDTO = _mapper.Map<AuthorDTO>(author);
+
+                return CreatedAtAction("GetAuthor", new { id = author.Id }, authorDTO);
             }
-
-            var author = _mapper.Map<Author>(authorDTO);
-
-            _context.Authors.Add(author);
-            await _context.SaveChangesAsync();
-
-            author = await LoadAuthorAsync(author.Id);
-
-            authorDTO = _mapper.Map<AuthorDTO>(author);
-
-            return CreatedAtAction("GetAuthor", new { id = author.Id }, authorDTO);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode PostAuthor was throw exception");
+                return BadRequest();
+            }
         }
 
         // DELETE: api/Authors/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<AuthorDTO>> DeleteAuthor(int id)
         {
-            var author = await _context.Authors.FindAsync(id);
-
-            if (author == null)
+            try
             {
-                return NotFound();
+                var author = await _context.Authors.FindAsync(id);
+
+                if (author == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Authors.Remove(author);
+                await _context.SaveChangesAsync();
+
+                var authorDTO = _mapper.Map<AuthorDTO>(author);
+
+                return Ok(authorDTO);
             }
-
-            _context.Authors.Remove(author);
-            await _context.SaveChangesAsync();
-
-            var authorDTO = _mapper.Map<AuthorDTO>(author);
-
-            return Ok(authorDTO);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode DeleteAuthor was throw exception");
+                return BadRequest();
+            }
         }
 
         private bool AuthorExists(int id)
