@@ -7,6 +7,6 @@ namespace OnlineBooksApi.Models.DTO.Author
 {
     public class CategoryAssigmentDTO
     {
-        public CategoryDTO Category { get; set; }
+        public OnlyCategoryDTO Category { get; set; }
     }
 }

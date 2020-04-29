@@ -7,6 +7,6 @@ namespace OnlineBooksApi.Models.DTO.Author
 {
     public class ShelftAssigmentDTO
     {
-        public ShelfDTO Shelf { get; set; }
+        public OnlyShelfDTO Shelf { get; set; }
     }
 }

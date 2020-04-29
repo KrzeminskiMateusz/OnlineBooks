@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OnlineBooksApi.Models.DTO
 {
-    public class ShelfDTO
+    public class OnlyCategoryDTO
     {
         public string Name { get; set; }
     }
