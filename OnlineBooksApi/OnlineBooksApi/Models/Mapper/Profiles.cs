@@ -3,6 +3,7 @@ using OnlineBooksApi.Models.DTO;
 using OnlineBooksApi.Models.DTO.Author;
 using OnlineBooksApi.Models.DTO.Book;
 using OnlineBooksApi.Models.DTO.Category;
+using OnlineBooksApi.Models.DTO.Shelf;
 using OnlineBooksApi.Models.DTO.Subcategory;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace OnlineBooksApi.Models.Mapper
             CreateMap<Category, OnlyCategoryDTO>();
             CreateMap<Subcategory, OnlySubcategoryDTO>();
             CreateMap<Shelf, OnlyShelfDTO>();
+
             CreateMap<Category, CategoryDTO>();
             CreateMap<CategoryDTO, Category>();
             CreateMap<BookCategoryAssigment, CategoryBookAssigmentDTO>();
@@ -38,6 +40,7 @@ namespace OnlineBooksApi.Models.Mapper
             CreateMap<Author, CategoryAuthorDTO>();
             CreateMap<Book, CategoryBookDTO>();
             CreateMap<CategorySubcategoryAssigment, SubcategoryAssigmentDTO>();
+
             CreateMap<Subcategory, SubcategoryDTO>();
             CreateMap<SubcategoryDTO, Subcategory>();
             CreateMap<CategorySubcategoryAssigment, CategoryAssigmentDTO>();
@@ -45,6 +48,13 @@ namespace OnlineBooksApi.Models.Mapper
             CreateMap<Book, SubcategoryBookDTO>();
             CreateMap<AuthorSubcategoryAssigment, SubcategoryAuthorAssigmentDTO>();
             CreateMap<BookSubcategoryAssigment, SubcategoryBookAssigmentDTO>();
+
+            CreateMap<Shelf, ShelfDTO>();
+            CreateMap<ShelfDTO, Shelf>();
+            CreateMap<ShelfBookAssigment, ShelfBookAssigmentDTO>();
+            CreateMap<ShelftAuthorAssigment, ShelfAuthorAssigmentDTO>();
+            CreateMap<Book, ShelfBookDTO>();
+            CreateMap<Author, ShelfAuthroDTO>();
         }     
     }
 }
