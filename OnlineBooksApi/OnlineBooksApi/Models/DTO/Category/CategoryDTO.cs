@@ -13,7 +13,7 @@ namespace OnlineBooksApi.Models.DTO.Category
 
 #nullable enable
         public IEnumerable<SubcategoryAssigmentDTO>? Subcategories { get; set; }
-
+        
         public IEnumerable<CategoryBookAssigmentDTO>? Books { get; set; }
 
         public IEnumerable<CategoryAuthorAssigmentDTO>? Authors { get; set; }

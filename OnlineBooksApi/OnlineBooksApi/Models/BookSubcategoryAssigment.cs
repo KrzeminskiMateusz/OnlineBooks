@@ -11,7 +11,7 @@ namespace OnlineBooksApi.Models
 
         public int SubcategoryId { get; set; }
 
-        public Book Author { get; set; }
+        public Book Book { get; set; }
 
         public Subcategory Subcategory { get; set; }
     }

@@ -15,6 +15,10 @@ namespace OnlineBooksApi.Models
         public string Name { get; set; }
 #nullable enable
         public IEnumerable<CategorySubcategoryAssigment>? Categories { get; set; }
+
+        public IEnumerable<AuthorSubcategoryAssigment>? Authors { get; set; }
+
+        public IEnumerable<BookSubcategoryAssigment>? Books { get; set; }
 #nullable disable
     }
 }

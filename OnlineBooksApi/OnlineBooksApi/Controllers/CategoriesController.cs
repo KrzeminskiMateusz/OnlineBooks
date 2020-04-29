@@ -50,76 +50,123 @@ namespace OnlineBooksApi.Controllers
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategory(int id)
+        public async Task<ActionResult<CategoryDTO>> GetCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-
-            if (category == null)
+            try
             {
-                return NotFound();
-            }
+                var category = await LoadCategoryAsync(id);
 
-            return category;
+                var categoryDTO = _mapper.Map<CategoryDTO>(category);
+
+                return Ok(categoryDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode GetCategory was throw exception");
+                return BadRequest();
+            }
         }
 
         // PUT: api/Categories/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategory(int id, Category category)
+        public async Task<IActionResult> PutCategory(int id, CategoryDTO categoryDTO)
         {
-            if (id != category.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(category).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(id))
+                var category = await _context.Categories.FindAsync(id);
+
+                if (category == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                var categories = await _context.Categories.ToListAsync();
+
+                if (categoryDTO.Name != null && categories.Any(x => x.Name == categoryDTO.Name && x.Id != id))
+                {
+                    return BadRequest("This category has been existed already");
+                }
+
+                _mapper.Map<CategoryDTO, Category>(categoryDTO, category);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException) when (!CategoryExists(id))
+                {
+                    return NotFound();
+                }
+
+                category = await LoadCategoryAsync(id);
+
+                categoryDTO = _mapper.Map<CategoryDTO>(category);
+
+                return Ok(categoryDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode PutCategory was throw exception");
+                return BadRequest();
+            }
         }
 
         // POST: api/Categories
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
+        public async Task<ActionResult<CategoryDTO>> PostCategory(CategoryDTO categoryDTO)
         {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var categories = await _context.Categories.ToListAsync();
 
-            return CreatedAtAction("GetCategory", new { id = category.Id }, category);
+                if (categoryDTO.Name != null && categories.Any(x => x.Name == categoryDTO.Name))
+                {
+                    return BadRequest("This category has been existed already");
+                }
+
+                var category = _mapper.Map<Category>(categoryDTO);
+
+                _context.Categories.Add(category);
+                await _context.SaveChangesAsync();
+
+                category = await LoadCategoryAsync(category.Id);
+
+                categoryDTO = _mapper.Map<CategoryDTO>(category);
+
+                return CreatedAtAction("GetCategory", new { id = category.Id }, categoryDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode PostCategory was throw exception");
+                return BadRequest();
+            }
         }
 
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Category>> DeleteCategory(int id)
+        public async Task<ActionResult<CategoryDTO>> DeleteCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
+            try
             {
-                return NotFound();
+                var category = await _context.Categories.FindAsync(id);
+
+                if (category == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Categories.Remove(category);
+                await _context.SaveChangesAsync();
+
+                var categoryDTO = _mapper.Map<CategoryDTO>(category);
+
+                return Ok(categoryDTO);
             }
-
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
-
-            return category;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Methode DeleteCategory was throw exception");
+                return BadRequest();
+            }
         }
 
         private bool CategoryExists(int id)

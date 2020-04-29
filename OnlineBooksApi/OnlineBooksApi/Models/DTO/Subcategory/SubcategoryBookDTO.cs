@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OnlineBooksApi.Models.DTO.Author
+namespace OnlineBooksApi.Models.DTO.Subcategory
 {
-    public class AuthorBooksDTO
+    public class SubcategoryBookDTO
     {
 #nullable enable
         public string? Title { get; set; }
