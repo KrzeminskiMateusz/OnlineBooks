@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OnlineBooksApi.Models.DTO.Author
 {
-    public class AuthorBooksDTO
+    public class AuthorBooksDTO 
     {
 #nullable enable
         public string? Title { get; set; }
@@ -17,7 +17,6 @@ namespace OnlineBooksApi.Models.DTO.Author
         public DateTime PublcationDate { get; set; }
 
         public int? NumberOfPages { get; set; }
-
         public IEnumerable<CategoryAssigmentDTO>? Categories { get; set; }
 
         public IEnumerable<SubcategoryAssigmentDTO>? Subcategories { get; set; }

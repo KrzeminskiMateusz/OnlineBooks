@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using OnlineBooksApi.Models.DTO;
 using OnlineBooksApi.Models.DTO.Author;
+using OnlineBooksApi.Models.DTO.AuthorCategoryAssigment;
+using OnlineBooksApi.Models.DTO.AuthorSubcategoryAssigment;
 using OnlineBooksApi.Models.DTO.Book;
 using OnlineBooksApi.Models.DTO.Category;
 using OnlineBooksApi.Models.DTO.Shelf;
@@ -55,6 +57,11 @@ namespace OnlineBooksApi.Models.Mapper
             CreateMap<ShelftAuthorAssigment, ShelfAuthorAssigmentDTO>();
             CreateMap<Book, ShelfBookDTO>();
             CreateMap<Author, ShelfAuthroDTO>();
+
+            CreateMap<AuthorCategoryAssigment, AuthorCategoryAssigmentDTO>();
+            CreateMap<Author, AuthorAssigmentDTO>();
+
+            CreateMap<AuthorSubcategoryAssigment, AuthorSubcategoryAssigmentDTO>();
         }     
     }
 }
