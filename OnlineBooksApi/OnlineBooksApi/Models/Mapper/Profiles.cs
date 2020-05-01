@@ -4,6 +4,8 @@ using OnlineBooksApi.Models.DTO.Author;
 using OnlineBooksApi.Models.DTO.AuthorCategoryAssigment;
 using OnlineBooksApi.Models.DTO.AuthorSubcategoryAssigment;
 using OnlineBooksApi.Models.DTO.Book;
+using OnlineBooksApi.Models.DTO.BookCategoryAssigment;
+using OnlineBooksApi.Models.DTO.BookSubCategoryAssigment;
 using OnlineBooksApi.Models.DTO.Category;
 using OnlineBooksApi.Models.DTO.Shelf;
 using OnlineBooksApi.Models.DTO.Subcategory;
@@ -62,6 +64,11 @@ namespace OnlineBooksApi.Models.Mapper
             CreateMap<Author, AuthorAssigmentDTO>();
 
             CreateMap<AuthorSubcategoryAssigment, AuthorSubcategoryAssigmentDTO>();
+
+            CreateMap<BookCategoryAssigment, BookCategoryAssigmentDTO>();
+            CreateMap<Book, BookAssigmentDTO>();
+
+            CreateMap<BookSubcategoryAssigment, BookSubcategoryAssigmentDTO>();
         }     
     }
 }
