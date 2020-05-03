@@ -12,9 +12,8 @@ namespace OnlineBooksApi.Models
     {
         public int AuthorId { get; set; }
         public int CategoryId { get; set; }
-#nullable enable
-        public Author? Author { get; set; }
-        public Category? Category { get; set; }
-#nullable disable
+
+        public Author Author { get; set; }
+        public Category Category { get; set; }
     }
 }

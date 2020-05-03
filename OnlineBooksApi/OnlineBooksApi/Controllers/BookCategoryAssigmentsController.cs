@@ -36,6 +36,11 @@ namespace OnlineBooksApi.Controllers
             {
                 var bookCategoryAssigments = await LoadBookCategoryAssigmentsAsync();
 
+                if (bookCategoryAssigments == null)
+                {
+                    return NotFound();
+                }
+
                 var bookCategoryAssigmentsDTO = _mapper.Map<IEnumerable<BookCategoryAssigmentDTO>>(bookCategoryAssigments);
 
                 return Ok(bookCategoryAssigmentsDTO);
@@ -54,6 +59,11 @@ namespace OnlineBooksApi.Controllers
             try
             {
                 var bookCategoryAssigment = await LoadBookCategoryAssigmentAsync(bookId, categoryId);
+
+                if (bookCategoryAssigment == null)
+                {
+                    return NotFound();
+                }
 
                 var bookCategoryAssigmentDTO = _mapper.Map<BookCategoryAssigmentDTO>(bookCategoryAssigment);
 

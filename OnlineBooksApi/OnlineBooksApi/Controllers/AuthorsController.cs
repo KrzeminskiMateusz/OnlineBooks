@@ -39,6 +39,11 @@ namespace OnlineBooksApi.Controllers
             {
                 var authors = await LoadAuthorsAsync();
 
+                if (authors == null)
+                {
+                    return NotFound();
+                }
+
                 var authorsDTO = _mapper.Map<IEnumerable<AuthorDTO>>(authors);
 
                 return Ok(authorsDTO);
@@ -57,6 +62,11 @@ namespace OnlineBooksApi.Controllers
             try
             {
                 var author = await LoadAuthorAsync(id);
+
+                if (author == null)
+                {
+                    return NotFound();
+                }
 
                 var authorDTO = _mapper.Map<AuthorDTO>(author);
 

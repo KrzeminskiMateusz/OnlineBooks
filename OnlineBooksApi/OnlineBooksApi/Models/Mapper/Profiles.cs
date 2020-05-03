@@ -7,6 +7,7 @@ using OnlineBooksApi.Models.DTO.Book;
 using OnlineBooksApi.Models.DTO.BookCategoryAssigment;
 using OnlineBooksApi.Models.DTO.BookSubCategoryAssigment;
 using OnlineBooksApi.Models.DTO.Category;
+using OnlineBooksApi.Models.DTO.CategorySubcategoryAssigment;
 using OnlineBooksApi.Models.DTO.Shelf;
 using OnlineBooksApi.Models.DTO.Subcategory;
 using System;
@@ -69,6 +70,12 @@ namespace OnlineBooksApi.Models.Mapper
             CreateMap<Book, BookAssigmentDTO>();
 
             CreateMap<BookSubcategoryAssigment, BookSubcategoryAssigmentDTO>();
+
+            CreateMap<CategorySubcategoryAssigment, CategorySubcategoryAssigmentDTO>();
+
+            CreateMap<ShelftAuthorAssigment, ShelfAuthorAssigmentDTO>();
+
+            CreateMap<ShelfBookAssigment, ShelfBookAssigmentDTO>();
         }     
     }
 }

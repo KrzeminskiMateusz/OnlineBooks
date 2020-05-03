@@ -36,6 +36,11 @@ namespace OnlineBooksApi.Controllers
             {
                 var shelves = await LoadShelvesAsync();
 
+                if (shelves == null)
+                {
+                    return NotFound();
+                }
+
                 var shelvesDTO = _mapper.Map<IEnumerable<ShelfDTO>>(shelves);
 
                 return Ok(shelvesDTO);
@@ -54,6 +59,11 @@ namespace OnlineBooksApi.Controllers
             try
             {
                 var shelf = await LoadShelfAsync(id);
+
+                if (shelf == null)
+                {
+                    return NotFound();
+                }
 
                 var shelfDTO = _mapper.Map<ShelfDTO>(shelf);
 

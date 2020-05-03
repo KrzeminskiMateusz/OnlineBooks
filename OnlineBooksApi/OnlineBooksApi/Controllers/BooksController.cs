@@ -36,6 +36,11 @@ namespace OnlineBooksApi.Controllers
             {
                 var books = await LoadBooksAsync();
 
+                if (books == null)
+                {
+                    return NotFound();
+                }
+
                 var booksDTO = _mapper.Map<IEnumerable<BookDTO>>(books);
 
                 return Ok(booksDTO);
@@ -54,6 +59,11 @@ namespace OnlineBooksApi.Controllers
             try
             {
                 var book = await LoadBookAsync(id);
+
+                if (book == null)
+                {
+                    return NotFound();
+                }
 
                 var bookDTO = _mapper.Map<BookDTO>(book);
 
