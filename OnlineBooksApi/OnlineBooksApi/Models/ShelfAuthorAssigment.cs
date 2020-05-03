@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OnlineBooksApi.Models
 {
-    public class ShelftAuthorAssigment
+    public class ShelfAuthorAssigment
     {
         public int ShelfId { get; set; }
         public int AuthorId { get; set; }

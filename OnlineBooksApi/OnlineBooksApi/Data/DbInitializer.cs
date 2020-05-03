@@ -583,12 +583,12 @@ namespace OnlineBooksApi.Data
             }
             context.SaveChanges();
 
-            var shelfAuthorAssigments = new ShelftAuthorAssigment[]
+            var shelfAuthorAssigments = new ShelfAuthorAssigment[]
             {
-                new ShelftAuthorAssigment{ShelfId= shelves.Single(x => x.Name == "Ulubione").Id, AuthorId = authors.Single(x => x.LastName =="Kapuściński").Id}
+                new ShelfAuthorAssigment{ShelfId= shelves.Single(x => x.Name == "Ulubione").Id, AuthorId = authors.Single(x => x.LastName =="Kapuściński").Id}
             };
 
-            foreach (ShelftAuthorAssigment shelfAuthorAssigment in shelfAuthorAssigments)
+            foreach (ShelfAuthorAssigment shelfAuthorAssigment in shelfAuthorAssigments)
             {
                 context.ShelftAuthorAssigments.Add(shelfAuthorAssigment);
             }

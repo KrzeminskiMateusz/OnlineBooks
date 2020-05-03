@@ -20,7 +20,7 @@ namespace OnlineBooksApi.Models
 
 #nullable enable
         public IEnumerable<ShelfBookAssigment>? Books { get; set; }
-        public IEnumerable<ShelftAuthorAssigment>? Authors { get; set; }
+        public IEnumerable<ShelfAuthorAssigment>? Authors { get; set; }
 #nullable disable
     }
 }

@@ -58,7 +58,7 @@ namespace OnlineBooksApi.Controllers
         {
             try
             {
-                var categorySubcategoryAssigment = await LoadCategorySubcategoryAssigmenttAsync(categoryId, subcategoryId);
+                var categorySubcategoryAssigment = await LoadCategorySubcategoryAssigmentAsync(categoryId, subcategoryId);
 
                 if (categorySubcategoryAssigment == null)
                 {
@@ -82,7 +82,7 @@ namespace OnlineBooksApi.Controllers
         {
             try
             {
-                var categorySubcategoryAssigment = await LoadCategorySubcategoryAssigmenttAsync(pOSTCategorySubcategoryAssigmentDTO.CategoryId, pOSTCategorySubcategoryAssigmentDTO.SubcategoryId);
+                var categorySubcategoryAssigment = await LoadCategorySubcategoryAssigmentAsync(pOSTCategorySubcategoryAssigmentDTO.CategoryId, pOSTCategorySubcategoryAssigmentDTO.SubcategoryId);
 
                 if (categorySubcategoryAssigment != null)
                 {
@@ -108,7 +108,7 @@ namespace OnlineBooksApi.Controllers
                 _context.CategorySubcategoryAssigments.Add(categorySubcategoryAssigment);
                 await _context.SaveChangesAsync();
 
-                categorySubcategoryAssigment = await LoadCategorySubcategoryAssigmenttAsync(pOSTCategorySubcategoryAssigmentDTO.CategoryId, pOSTCategorySubcategoryAssigmentDTO.SubcategoryId);
+                categorySubcategoryAssigment = await LoadCategorySubcategoryAssigmentAsync(pOSTCategorySubcategoryAssigmentDTO.CategoryId, pOSTCategorySubcategoryAssigmentDTO.SubcategoryId);
 
                 var categorySubcategoryAssigmentDTO = _mapper.Map<CategorySubcategoryAssigmentDTO>(categorySubcategoryAssigment);
 
@@ -127,7 +127,7 @@ namespace OnlineBooksApi.Controllers
         {
             try
             {
-                var categorySubcategoryAssigment = await LoadCategorySubcategoryAssigmenttAsync(categoryId, subcategoryId);
+                var categorySubcategoryAssigment = await LoadCategorySubcategoryAssigmentAsync(categoryId, subcategoryId);
 
                 if (categorySubcategoryAssigment == null)
                 {
@@ -157,7 +157,7 @@ namespace OnlineBooksApi.Controllers
                                          .ToListAsync();
         }
 
-        private async Task<CategorySubcategoryAssigment> LoadCategorySubcategoryAssigmenttAsync(int categoryId, int subcategoryId)
+        private async Task<CategorySubcategoryAssigment> LoadCategorySubcategoryAssigmentAsync(int categoryId, int subcategoryId)
         {
             return await _context.CategorySubcategoryAssigments
                                         .Include(x => x.Category)

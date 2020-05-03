@@ -19,7 +19,7 @@ namespace OnlineBooksApi.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<BookCategoryAssigment> BookCategoryAssigments { get; set; }
         public DbSet<Shelf> Shelves { get; set; }
-        public DbSet<ShelftAuthorAssigment> ShelftAuthorAssigments { get; set; }
+        public DbSet<ShelfAuthorAssigment> ShelftAuthorAssigments { get; set; }
         public DbSet<ShelfBookAssigment> ShelfBookAssigments { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategorySubcategoryAssigment> CategorySubcategoryAssigments { get; set; }
@@ -36,7 +36,7 @@ namespace OnlineBooksApi.Data
             modelBuilder.Entity<BookCategoryAssigment>().ToTable("BookCategoryAssigment");
             modelBuilder.Entity<BookSubcategoryAssigment>().ToTable("BookSubcategoryAssigment");
             modelBuilder.Entity<Shelf>().ToTable("Shelf");
-            modelBuilder.Entity<ShelftAuthorAssigment>().ToTable("ShelftAuthorAssigment");
+            modelBuilder.Entity<ShelfAuthorAssigment>().ToTable("ShelftAuthorAssigment");
             modelBuilder.Entity<ShelfBookAssigment>().ToTable("ShelfBookAssigment");
             modelBuilder.Entity<Category>().ToTable("Category");
             modelBuilder.Entity<CategorySubcategoryAssigment>().ToTable("CategorySubcategoryAssigment");
@@ -44,7 +44,7 @@ namespace OnlineBooksApi.Data
 
             modelBuilder.Entity<AuthorCategoryAssigment>().HasKey(c => new { c.AuthorId, c.CategoryId });
             modelBuilder.Entity<BookCategoryAssigment>().HasKey(c => new { c.BookId, c.CategoryId });
-            modelBuilder.Entity<ShelftAuthorAssigment>().HasKey(c => new { c.ShelfId, c.AuthorId });
+            modelBuilder.Entity<ShelfAuthorAssigment>().HasKey(c => new { c.ShelfId, c.AuthorId });
             modelBuilder.Entity<ShelfBookAssigment>().HasKey(c => new { c.ShelfId, c.BookId });
             modelBuilder.Entity<CategorySubcategoryAssigment>().HasKey(c => new { c.CategoryId, c.SubcategoryId });
             modelBuilder.Entity<AuthorSubcategoryAssigment>().HasKey(c => new { c.AuthorId, c.SubcategoryId });

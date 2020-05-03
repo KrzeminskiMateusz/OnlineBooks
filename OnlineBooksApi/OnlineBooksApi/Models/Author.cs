@@ -63,7 +63,7 @@ namespace OnlineBooksApi.Models
 
         public IEnumerable<AuthorSubcategoryAssigment>? Subcategories { get; set; }
 
-        public IEnumerable<ShelftAuthorAssigment>? Shelves { get; set; }
+        public IEnumerable<ShelfAuthorAssigment>? Shelves { get; set; }
 
         public IEnumerable<Book>? Books { get; set; }
 #nullable disable
