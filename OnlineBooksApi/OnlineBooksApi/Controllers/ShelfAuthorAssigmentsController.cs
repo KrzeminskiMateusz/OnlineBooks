@@ -30,11 +30,11 @@ namespace OnlineBooksApi.Controllers
 
         // GET: api/ShelftAuthorAssigments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShelfAuthorAssigmentDTO>>> GetShelftAuthorAssigments()
+        public async Task<ActionResult<IEnumerable<ShelfAuthorAssigmentDTO>>> GetShelfAuthorAssigments()
         {
             try
             {
-                var shelftAuthorAssigments = await LoadShelftAuthorAssigmentsAsync();
+                var shelftAuthorAssigments = await LoadShelfAuthorAssigmentsAsync();
 
                 if (shelftAuthorAssigments == null)
                 {
@@ -47,18 +47,18 @@ namespace OnlineBooksApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Methode GetShelftAuthorAssigments was throw exception");
+                _logger.LogError(ex, "Methode GetShelfAuthorAssigments was throw exception");
                 return BadRequest();
             }
         }
 
         // GET: api/ShelftAuthorAssigments/5&5
         [HttpGet("{shelfId}&{authorId}")]
-        public async Task<ActionResult<ShelfAuthorAssigmentDTO>> GetShelftAuthorAssigment(int shelfId, int authorId)
+        public async Task<ActionResult<ShelfAuthorAssigmentDTO>> GetShelfAuthorAssigment(int shelfId, int authorId)
         {
             try
             {
-                var shelftAuthorAssigment = await LoadShelftAuthorAssigmentAsync(shelfId, authorId);
+                var shelftAuthorAssigment = await LoadShelfAuthorAssigmentAsync(shelfId, authorId);
 
                 if (shelftAuthorAssigment == null)
                 {
@@ -71,18 +71,18 @@ namespace OnlineBooksApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Methode GetShelftAuthorAssigment was throw exception");
+                _logger.LogError(ex, "Methode GetShelfAuthorAssigment was throw exception");
                 return BadRequest();
             }
         }
 
         // POST: api/ShelftAuthorAssigments
         [HttpPost]
-        public async Task<ActionResult<ShelfAuthorAssigmentDTO>> PostShelftAuthorAssigment(POSTShelfAuthorAssigmentDTO pOSTShelfAuthorAssigmentDTO)
+        public async Task<ActionResult<ShelfAuthorAssigmentDTO>> PostShelfAuthorAssigment(POSTShelfAuthorAssigmentDTO pOSTShelfAuthorAssigmentDTO)
         {
             try
             {
-                var shelftAuthorAssigment = await LoadShelftAuthorAssigmentAsync(pOSTShelfAuthorAssigmentDTO.ShelfId, pOSTShelfAuthorAssigmentDTO.AuthorId);
+                var shelftAuthorAssigment = await LoadShelfAuthorAssigmentAsync(pOSTShelfAuthorAssigmentDTO.ShelfId, pOSTShelfAuthorAssigmentDTO.AuthorId);
 
                 if (shelftAuthorAssigment != null)
                 {
@@ -108,15 +108,15 @@ namespace OnlineBooksApi.Controllers
                 _context.ShelftAuthorAssigments.Add(shelftAuthorAssigment);
                 await _context.SaveChangesAsync();
 
-                shelftAuthorAssigment = await LoadShelftAuthorAssigmentAsync(pOSTShelfAuthorAssigmentDTO.ShelfId, pOSTShelfAuthorAssigmentDTO.AuthorId);
+                shelftAuthorAssigment = await LoadShelfAuthorAssigmentAsync(pOSTShelfAuthorAssigmentDTO.ShelfId, pOSTShelfAuthorAssigmentDTO.AuthorId);
 
                 var shelftAuthorAssigmentDTO = _mapper.Map<ShelfAuthorAssigmentDTO>(shelftAuthorAssigment);
 
-                return CreatedAtAction("GetShelftAuthorAssigment", new { pOSTShelfAuthorAssigmentDTO.ShelfId, pOSTShelfAuthorAssigmentDTO.AuthorId }, shelftAuthorAssigmentDTO);
+                return CreatedAtAction("GetShelfAuthorAssigment", new { pOSTShelfAuthorAssigmentDTO.ShelfId, pOSTShelfAuthorAssigmentDTO.AuthorId }, shelftAuthorAssigmentDTO);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Methode PostShelftAuthorAssigment was throw exception");
+                _logger.LogError(ex, "Methode PostShelfAuthorAssigment was throw exception");
                 return BadRequest();
             }
         }
@@ -127,7 +127,7 @@ namespace OnlineBooksApi.Controllers
         {
             try
             {
-                var shelftAuthorAssigment = await LoadShelftAuthorAssigmentAsync(shelfId, authorId);
+                var shelftAuthorAssigment = await LoadShelfAuthorAssigmentAsync(shelfId, authorId);
 
                 if (shelftAuthorAssigment == null)
                 {
@@ -148,7 +148,7 @@ namespace OnlineBooksApi.Controllers
             }
         }
 
-        private async Task<IEnumerable<ShelfAuthorAssigment>> LoadShelftAuthorAssigmentsAsync()
+        private async Task<IEnumerable<ShelfAuthorAssigment>> LoadShelfAuthorAssigmentsAsync()
         {
             return await _context.ShelftAuthorAssigments
                                          .Include(x => x.Shelf)
@@ -157,7 +157,7 @@ namespace OnlineBooksApi.Controllers
                                          .ToListAsync();
         }
 
-        private async Task<ShelfAuthorAssigment> LoadShelftAuthorAssigmentAsync(int shelfId, int authorId)
+        private async Task<ShelfAuthorAssigment> LoadShelfAuthorAssigmentAsync(int shelfId, int authorId)
         {
             return await _context.ShelftAuthorAssigments
                                         .Include(x => x.Shelf)
