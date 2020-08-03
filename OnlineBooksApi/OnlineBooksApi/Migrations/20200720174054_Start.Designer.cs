@@ -10,8 +10,8 @@ using OnlineBooksApi.Data;
 namespace OnlineBooksApi.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20200425204356_Initial")]
-    partial class Initial
+    [Migration("20200720174054_Start")]
+    partial class Start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -226,6 +226,21 @@ namespace OnlineBooksApi.Migrations
                     b.ToTable("Shelf");
                 });
 
+            modelBuilder.Entity("OnlineBooksApi.Models.ShelfAuthorAssigment", b =>
+                {
+                    b.Property<int>("ShelfId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ShelfId", "AuthorId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("ShelftAuthorAssigment");
+                });
+
             modelBuilder.Entity("OnlineBooksApi.Models.ShelfBookAssigment", b =>
                 {
                     b.Property<int>("ShelfId")
@@ -239,21 +254,6 @@ namespace OnlineBooksApi.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("ShelfBookAssigment");
-                });
-
-            modelBuilder.Entity("OnlineBooksApi.Models.ShelftAuthorAssigment", b =>
-                {
-                    b.Property<int>("ShelfId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ShelfId", "AuthorId");
-
-                    b.HasIndex("AuthorId");
-
-                    b.ToTable("ShelftAuthorAssigment");
                 });
 
             modelBuilder.Entity("OnlineBooksApi.Models.Subcategory", b =>
@@ -297,7 +297,7 @@ namespace OnlineBooksApi.Migrations
                         .IsRequired();
 
                     b.HasOne("OnlineBooksApi.Models.Subcategory", "Subcategory")
-                        .WithMany()
+                        .WithMany("Authors")
                         .HasForeignKey("SubcategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -327,14 +327,14 @@ namespace OnlineBooksApi.Migrations
 
             modelBuilder.Entity("OnlineBooksApi.Models.BookSubcategoryAssigment", b =>
                 {
-                    b.HasOne("OnlineBooksApi.Models.Book", "Author")
+                    b.HasOne("OnlineBooksApi.Models.Book", "Book")
                         .WithMany("Subcategories")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OnlineBooksApi.Models.Subcategory", "Subcategory")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("SubcategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -355,6 +355,21 @@ namespace OnlineBooksApi.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("OnlineBooksApi.Models.ShelfAuthorAssigment", b =>
+                {
+                    b.HasOne("OnlineBooksApi.Models.Author", "Author")
+                        .WithMany("Shelves")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineBooksApi.Models.Shelf", "Shelf")
+                        .WithMany("Authors")
+                        .HasForeignKey("ShelfId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("OnlineBooksApi.Models.ShelfBookAssigment", b =>
                 {
                     b.HasOne("OnlineBooksApi.Models.Book", "Book")
@@ -365,21 +380,6 @@ namespace OnlineBooksApi.Migrations
 
                     b.HasOne("OnlineBooksApi.Models.Shelf", "Shelf")
                         .WithMany("Books")
-                        .HasForeignKey("ShelfId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("OnlineBooksApi.Models.ShelftAuthorAssigment", b =>
-                {
-                    b.HasOne("OnlineBooksApi.Models.Author", "Author")
-                        .WithMany("Shelves")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OnlineBooksApi.Models.Shelf", "Shelf")
-                        .WithMany("Authors")
                         .HasForeignKey("ShelfId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
