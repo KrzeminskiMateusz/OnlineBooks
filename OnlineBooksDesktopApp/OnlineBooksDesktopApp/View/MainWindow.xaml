@@ -6,13 +6,9 @@
         xmlns:local="clr-namespace:OnlineBooksDesktopApp"
         mc:Ignorable="d"
         Title="Biblioteka"
-        Icon="C:\Users\mateu\source\repos\Mati\GitHub_Repositories\OnlineBooks\OnlineBooksDesktopApp\OnlineBooksDesktopApp\Resources\books.png"
         Width="900"
         Height="500">
     <Grid>
-        <Grid.Background>
-            <ImageBrush Stretch="Fill" Opacity="0.75" ImageSource="C:\Users\mateu\source\repos\Mati\GitHub_Repositories\OnlineBooks\OnlineBooksDesktopApp\OnlineBooksDesktopApp\Resources\books.png"/>
-        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
