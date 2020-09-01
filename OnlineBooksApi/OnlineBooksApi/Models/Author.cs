@@ -15,7 +15,7 @@ namespace OnlineBooksApi.Models
         public int Id { get; set; }
 #nullable enable
 
-        [StringLength(50, MinimumLength = 2)]
+        [StringLength(50, MinimumLength = 2)] 
         public string? FirstName { get; set; }
 
         [StringLength(50, MinimumLength = 2)]
