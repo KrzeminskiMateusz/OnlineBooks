@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OnlineBooksDesktopApp"
+        xmlns:menu="clr-namespace:OnlineBooksDesktopApp.View.Controls"
         mc:Ignorable="d"
         Title="Biblioteka"
         Width="900"
@@ -23,8 +24,11 @@
 
         <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
             <Viewbox Stretch="Uniform">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Azure" FontFamily="Arial">Witaj w bibliotece</TextBlock>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontFamily="Arial">Witaj w bibliotece</TextBlock>
             </Viewbox>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <menu:HamburgerMenu></menu:HamburgerMenu>
         </Grid>
     </Grid>
 </Window>

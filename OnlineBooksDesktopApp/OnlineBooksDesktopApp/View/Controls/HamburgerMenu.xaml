@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="OnlineBooksDesktopApp.View.Controls.HamburgerMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OnlineBooksDesktopApp.View.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="200">
+    <Grid>
+        <StackPanel>
+            <Button>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/OnlineBooksDesktopApp/OnlineBooksDesktopApp/Resources/internet.png"/>
+                    <TextBlock>Strona główna</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button>Test2</Button>
+            <Button>Test3</Button>
+        </StackPanel>
+        <DockPanel>
+            <Button VerticalAlignment="Bottom">Settings</Button>
+        </DockPanel>
+    </Grid>
+</UserControl>
