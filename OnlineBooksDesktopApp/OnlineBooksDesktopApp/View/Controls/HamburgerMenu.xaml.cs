@@ -22,5 +22,12 @@ namespace OnlineBooksDesktopApp.View.Controls
         {
             InitializeComponent();
         }
+
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            HomeButton.Height = this.ActualHeight * 0.2;
+            HomeImage.Height = HomeButton.Height;
+            HomeImage.Width = HomeButton.Height;
+        }
     }
 }

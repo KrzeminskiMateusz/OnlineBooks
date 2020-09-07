@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OnlineBooksDesktopApp.View.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="200">
+             d:DesignHeight="450" d:DesignWidth="200" SizeChanged="UserControl_SizeChanged">
     <Grid>
         <StackPanel>
-            <Button>
+            <Button Background="Transparent" BorderThickness="0" Name="HomeButton">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/OnlineBooksDesktopApp/OnlineBooksDesktopApp/Resources/internet.png"/>
-                    <TextBlock>Strona główna</TextBlock>
+                    <Image Source="C:\Users\Mateusz Krzemiński\Desktop\Test\GitRepository\OnlineBooks\OnlineBooksDesktopApp\OnlineBooksDesktopApp\Resources\internet.png" Name="HomeImage"/>
+                    <TextBlock VerticalAlignment="Center">Strona główna</TextBlock>
                 </StackPanel>
             </Button>
             <Button>Test2</Button>
