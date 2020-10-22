@@ -8,10 +8,10 @@
         mc:Ignorable="d"
         Title="Biblioteka"
         Width="900"
-        Height="500">
+        Height="700">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -24,7 +24,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+        <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4">
             <Viewbox Stretch="Uniform">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontFamily="Arial">Witaj w bibliotece</TextBlock>
             </Viewbox>

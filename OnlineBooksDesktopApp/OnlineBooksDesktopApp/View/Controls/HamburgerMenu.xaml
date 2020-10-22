@@ -4,21 +4,44 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OnlineBooksDesktopApp.View.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="200" SizeChanged="UserControl_SizeChanged">
+             mc:Ignorable="d" Loaded="UserControl_Loaded" 
+             d:DesignHeight="250" d:DesignWidth="150" Background="DimGray">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="HamburgerMenuResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <StackPanel>
-            <Button Background="Transparent" BorderThickness="0" Name="HomeButton">
+            <Button Style="{StaticResource TransparentStyle}"  BorderThickness="0" HorizontalContentAlignment="Left" Height="40" Background="DimGray">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="C:\Users\Mateusz Krzemiński\Desktop\Test\GitRepository\OnlineBooks\OnlineBooksDesktopApp\OnlineBooksDesktopApp\Resources\internet.png" Name="HomeImage"/>
-                    <TextBlock VerticalAlignment="Center">Strona główna</TextBlock>
+                    <Image Source="/Resources/Images/home.png" Width="25" Height="25" Grid.Column="0"/>
+                    <TextBlock Padding="6" FontSize="16" Foreground="White" Text="{DynamicResource home}"/>
                 </StackPanel>
             </Button>
-            <Button>Test2</Button>
-            <Button>Test3</Button>
+            <Button Style="{StaticResource TransparentStyle}" BorderThickness="0" HorizontalContentAlignment="Left" Height="40" Background="DimGray">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/Images/user.png" Width="25" Height="25" Grid.Column="0"/>
+                    <TextBlock Padding="6" FontSize="16" Foreground="White" Text="{DynamicResource authors}"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource TransparentStyle}" BorderThickness="0" HorizontalContentAlignment="Left" Height="40" Background="DimGray">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/Images/book.png" Width="25" Height="25" Grid.Column="0"/>
+                    <TextBlock Padding="6" FontSize="16" Foreground="White" Text="{DynamicResource books}"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
         <DockPanel>
-            <Button VerticalAlignment="Bottom">Settings</Button>
+            <Button Style="{StaticResource TransparentStyle}" BorderThickness="0" HorizontalContentAlignment="Left" VerticalAlignment="Bottom" Height="40" Background="DimGray">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/Images/settings.png" Width="25" Height="25" Grid.Column="0"/>
+                    <TextBlock Padding="6" FontSize="16" Foreground="White" Text="{DynamicResource settings}"/>
+                </StackPanel>
+            </Button>
         </DockPanel>
     </Grid>
 </UserControl>

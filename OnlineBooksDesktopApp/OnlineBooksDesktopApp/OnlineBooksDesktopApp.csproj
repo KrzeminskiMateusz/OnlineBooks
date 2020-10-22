@@ -7,9 +7,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\book.png" />
+    <None Remove="Resources\home.png" />
+    <None Remove="Resources\internet.png" />
+    <None Remove="Resources\settings.png" />
+    <None Remove="Resources\user.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Images\book.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\home.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\settings.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\user.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="Repository\" />
-    <Folder Include="Resources\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
 
