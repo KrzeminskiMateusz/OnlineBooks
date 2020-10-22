@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineBooksDesktopApp.View.Classes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -26,25 +27,9 @@ namespace OnlineBooksDesktopApp.View.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            SetLanguageDictionary();
+            this.Resources.MergedDictionaries.Add(LanguageHelper.GetLanguageDictionary());
         }
 
-        private void SetLanguageDictionary()
-        {
-            ResourceDictionary dict = new ResourceDictionary();
-            switch (Thread.CurrentThread.CurrentCulture.ToString())
-            {
-                case "en-US":
-                    dict.Source = new Uri(@"\Resources\Languages\DictionaryENG.xaml", UriKind.Relative);
-                    break;
-                case "pl-PL":
-                    dict.Source = new Uri(@"\Resources\Languages\DictionaryPL.xaml", UriKind.Relative);
-                    break;
-                default:
-                    dict.Source = new Uri(@"\Resources\Languages\DictionaryPL.xaml", UriKind.Relative);
-                    break;
-            }
-            this.Resources.MergedDictionaries.Add(dict);
-        }
+       
     }
 }
