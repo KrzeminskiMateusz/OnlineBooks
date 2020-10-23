@@ -8,28 +8,41 @@
         mc:Ignorable="d"
         Title="Biblioteka"
         Width="900"
-        Height="700">
+        Height="700"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MainWindowResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4">
-            <Viewbox Stretch="Uniform">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontFamily="Arial">Witaj w bibliotece</TextBlock>
-            </Viewbox>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Label Content="{Binding Path=DataContext.HeaderText}" Name="HeaderLabel" VerticalContentAlignment="Center" FontSize="16"></Label>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Button Style="{StaticResource PurpleHoverButton}"  BorderThickness="0" HorizontalContentAlignment="Left" Height="40" Name="MenuButton" Click="MenuButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/Images/list.png" Width="25" Height="25" Margin="6" Grid.Column="0"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Name="HamMenuGrid">
             <menu:HamburgerMenu></menu:HamburgerMenu>
         </Grid>
     </Grid>

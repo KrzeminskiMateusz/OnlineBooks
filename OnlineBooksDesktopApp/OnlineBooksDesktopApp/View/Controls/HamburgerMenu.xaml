@@ -16,30 +16,34 @@
     </UserControl.Resources>
     <Grid>
         <StackPanel>
-            <Button Style="{StaticResource TransparentStyle}"  BorderThickness="0" HorizontalContentAlignment="Left" Height="40" Background="DimGray">
+            <Button Style="{StaticResource MediumPurpleHoverButton}"  BorderThickness="0" HorizontalContentAlignment="Left" Height="40" 
+                    Name="HomeButton" Click="HomeButton_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/Images/home.png" Width="25" Height="25" Grid.Column="0"/>
-                    <TextBlock Padding="6" FontSize="16" Foreground="White" Text="{DynamicResource home}"/>
+                    <Image Source="/Resources/Images/home.png" Width="25" Height="25" Margin="6, 6" Grid.Column="0"/>
+                    <TextBlock Padding="6, 10" FontSize="16" Foreground="White" Text="{DynamicResource home}" Name="HomeTextBlock"/>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource TransparentStyle}" BorderThickness="0" HorizontalContentAlignment="Left" Height="40" Background="DimGray">
+            <Button Style="{StaticResource MediumPurpleHoverButton}" BorderThickness="0" HorizontalContentAlignment="Left" Height="40" 
+                    Name="AuthorsButton" Click="AuthorsButton_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/Images/user.png" Width="25" Height="25" Grid.Column="0"/>
-                    <TextBlock Padding="6" FontSize="16" Foreground="White" Text="{DynamicResource authors}"/>
+                    <Image Source="/Resources/Images/user.png" Width="25" Height="25" Margin="6, 6" Grid.Column="0"/>
+                    <TextBlock Padding="6, 10" FontSize="16" Foreground="White" Text="{DynamicResource authors}" Name="AuthorsTextBlock"/>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource TransparentStyle}" BorderThickness="0" HorizontalContentAlignment="Left" Height="40" Background="DimGray">
+            <Button Style="{StaticResource MediumPurpleHoverButton}" BorderThickness="0" HorizontalContentAlignment="Left" Height="40" 
+                    Name="BooksName" Click="BooksName_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/Images/book.png" Width="25" Height="25" Grid.Column="0"/>
-                    <TextBlock Padding="6" FontSize="16" Foreground="White" Text="{DynamicResource books}"/>
+                    <Image Source="/Resources/Images/book.png" Width="25" Height="25" Margin="6, 6" Grid.Column="0"/>
+                    <TextBlock Padding="6, 10" FontSize="16" Foreground="White" Text="{DynamicResource books}" Name="BooksTextBlock"/>
                 </StackPanel>
             </Button>
         </StackPanel>
         <DockPanel>
-            <Button Style="{StaticResource TransparentStyle}" BorderThickness="0" HorizontalContentAlignment="Left" VerticalAlignment="Bottom" Height="40" Background="DimGray">
+            <Button Style="{StaticResource MediumPurpleHoverButton}" BorderThickness="0" HorizontalContentAlignment="Left" VerticalAlignment="Bottom" Height="40" 
+                    Name="SettingsName" Click="SettingsName_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/Images/settings.png" Width="25" Height="25" Grid.Column="0"/>
-                    <TextBlock Padding="6" FontSize="16" Foreground="White" Text="{DynamicResource settings}"/>
+                    <Image Source="/Resources/Images/settings.png" Width="25" Height="25" Margin="6, 6" Grid.Column="0"/>
+                    <TextBlock Padding="6, 10" FontSize="16" Foreground="White" Text="{DynamicResource settings}" Name="SettingsTextBlock"/>
                 </StackPanel>
             </Button>
         </DockPanel>
