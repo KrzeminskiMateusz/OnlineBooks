@@ -39,18 +39,20 @@
         </Grid>
         <Grid Grid.Column="3">
             <DockPanel HorizontalAlignment="Right">
-                <Button BorderThickness="0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Resources/Images/poland.png"/>
-                        <Label Content="PL"/>
-                    </StackPanel>
-                </Button>
-                <Button BorderThickness="0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Resources/Images/united-kingdom.png" />
-                        <Label Content="ENG"/>
-                    </StackPanel>
-                </Button>
+                <ComboBox Margin="0, 0, 20, 0" Width="90" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBoxItem Name="cmbItemPL">
+                        <StackPanel Orientation="Horizontal" Margin="4">
+                            <Image Source="/Resources/Images/poland.png" Height="25" Width="25"/>
+                            <Label Content="PL"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem Name="cmbItemENG">
+                        <StackPanel Orientation="Horizontal" Margin="4">
+                            <Image Source="/Resources/Images/united-kingdom.png" Height="25" Width="25"/>
+                            <Label Content="ENG"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                </ComboBox>
             </DockPanel>
         </Grid>
         <Grid Grid.Row="1" Name="HamMenuGrid">
