@@ -1,5 +1,4 @@
 ﻿using OnlineBooksDesktopApp.View.Classes;
-using OnlineBooksDesktopApp.View.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;

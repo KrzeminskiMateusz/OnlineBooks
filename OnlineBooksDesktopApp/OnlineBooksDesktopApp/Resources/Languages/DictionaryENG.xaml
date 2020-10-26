@@ -7,4 +7,5 @@
     <system:String x:Key="authors">Authors</system:String>
     <system:String x:Key="books">Books</system:String>
     <system:String x:Key="settings">Settings</system:String>
+    <system:String x:Key="mainTitle">Library</system:String>
 </ResourceDictionary>

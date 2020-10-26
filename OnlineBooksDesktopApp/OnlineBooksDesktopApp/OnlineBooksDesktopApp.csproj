@@ -9,7 +9,10 @@
   <ItemGroup>
     <None Remove="Resources\book.png" />
     <None Remove="Resources\home.png" />
+    <None Remove="Resources\Images\library.png" />
     <None Remove="Resources\Images\list.png" />
+    <None Remove="Resources\Images\poland.png" />
+    <None Remove="Resources\Images\united-kingdom.png" />
     <None Remove="Resources\internet.png" />
     <None Remove="Resources\settings.png" />
     <None Remove="Resources\user.png" />
@@ -22,10 +25,19 @@
     <Content Include="Resources\Images\home.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Images\library.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Images\list.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Images\poland.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Images\settings.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\united-kingdom.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Images\user.png">
