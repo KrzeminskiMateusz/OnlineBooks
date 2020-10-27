@@ -1,6 +1,7 @@
 ﻿using OnlineBooksDesktopApp.View.Classes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -34,6 +35,14 @@ namespace OnlineBooksDesktopApp.View.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            this.Resources.MergedDictionaries.Add(LanguageHelper.GetLanguageDictionary());
+
+            MainWindow.OnLanguageChanged += MainWindow_OnLanguageChanged;
+        }
+
+        private void MainWindow_OnLanguageChanged(object sender, string e)
+        {
+            this.Resources.MergedDictionaries.Remove(this.Resources.MergedDictionaries.Last());
             this.Resources.MergedDictionaries.Add(LanguageHelper.GetLanguageDictionary());
         }
 

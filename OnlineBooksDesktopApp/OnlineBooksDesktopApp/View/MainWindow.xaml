@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:OnlineBooksDesktopApp"
         xmlns:menu="clr-namespace:OnlineBooksDesktopApp.View.Controls"
         mc:Ignorable="d" Title="{DynamicResource mainTitle}" Width="900" Height="700" Loaded="Window_Loaded"
-        Icon="/Resources/Images/library.png">
+        Icon="/Resources/Images/library.png" >
 
     <Window.Resources>
         <ResourceDictionary>

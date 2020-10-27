@@ -22,6 +22,8 @@ namespace OnlineBooksDesktopApp
 
     public partial class MainWindow : Window
     {
+        public static event EventHandler<string> OnLanguageChanged;
+
         private Languages currentLanguage;
         enum Languages { PL, ENG };
         private string headerText;
@@ -64,14 +66,12 @@ namespace OnlineBooksDesktopApp
                     case "DictionaryENG":
                         currentLanguage = Languages.ENG;
                         break;
-                    default:
-                        currentLanguage = Languages.PL;
-                        break;
                 }
             }
 
             cmbItemPL.IsSelected = currentLanguage == Languages.PL;
             cmbItemENG.IsSelected = currentLanguage == Languages.ENG;
+            HeaderText = this.Resources["home"].ToString();
         }
 
         private void HamburgerMenu_OnHameMenuClick(object sender, HamburgerMenu.HamMenuArgs e)
@@ -95,36 +95,24 @@ namespace OnlineBooksDesktopApp
         {
             if (cmbItemPL.IsSelected)
             {
-                CultureInfo culturePL = CultureInfo.CreateSpecificCulture("pl-PL");
-                Thread.CurrentThread.CurrentCulture = culturePL;
-                foreach (var item in this.Resources.MergedDictionaries)
-                {
-                    var cos = item.Source.ToString();
-                    if (Path.GetFileNameWithoutExtension(item.Source.ToString()) == "DictionaryENG")
-                    {
-                        this.Resources.MergedDictionaries.Remove(item);
-                        SetLanguage();
-                        break;
-                    } 
-                }
+                ChangeCurrentCulture("pl-PL");
+                SetLanguage();
+
             }
             else if (cmbItemENG.IsSelected)
             {
-                CultureInfo cultureENG = CultureInfo.CreateSpecificCulture("en-US");
-                Thread.CurrentThread.CurrentCulture = cultureENG;
-                foreach (var item in this.Resources.MergedDictionaries)
-                {
-                    var cos = Path.GetFileNameWithoutExtension(item.Source.ToString());
-                    if (Path.GetFileNameWithoutExtension(item.Source.ToString()) == "DictionaryPL")
-                    {
-                        this.Resources.MergedDictionaries.Remove(item);
-                        SetLanguage();
-                        break;
-                    }
-                }
+                ChangeCurrentCulture("en-US");
+                SetLanguage();
+
             }
+        }
 
-
+        private void ChangeCurrentCulture(string language)
+        {
+            this.Resources.MergedDictionaries.Remove(this.Resources.MergedDictionaries.Last());
+            CultureInfo culturePL = CultureInfo.CreateSpecificCulture(language);
+            Thread.CurrentThread.CurrentCulture = culturePL;
+            OnLanguageChanged?.Invoke(this, language);
         }
     }
 }
