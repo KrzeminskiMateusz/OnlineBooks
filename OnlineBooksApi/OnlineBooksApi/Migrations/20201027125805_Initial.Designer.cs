@@ -10,8 +10,8 @@ using OnlineBooksApi.Data;
 namespace OnlineBooksApi.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20200720174054_Start")]
-    partial class Start
+    [Migration("20201027125805_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

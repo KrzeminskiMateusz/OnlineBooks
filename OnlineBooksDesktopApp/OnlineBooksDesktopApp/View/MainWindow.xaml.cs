@@ -1,5 +1,7 @@
-﻿using OnlineBooksDesktopApp.View.Classes;
+﻿using OnlineBooksDesktopApp.Repository;
+using OnlineBooksDesktopApp.View.Classes;
 using OnlineBooksDesktopApp.View.Controls;
+using OnlineBooksDesktopApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -41,6 +43,9 @@ namespace OnlineBooksDesktopApp
         {
             InitializeComponent();
             this.DataContext = this;
+
+            AuthorAPI api = new AuthorAPI();
+            AuthorsView view = new AuthorsView(api);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
