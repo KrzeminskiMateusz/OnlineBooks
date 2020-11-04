@@ -1,33 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace OnlineBooksDesktopApp.Model
 {
     public class Author
     {
-        public string? firstName { get; set; }
+        [JsonPropertyName("id")]
+        public long Id { get; set; }
 
-        public string? lastName { get; set; }
+        [JsonPropertyName("firstName")]
+        public string? FirstName { get; set; }
 
-        public string? nationality { get; set; }
+        [JsonPropertyName("lastName")]
+        public string? LastName { get; set; }
 
-        public DateTime? dataOfBirth { get; set; }
+        [JsonPropertyName("nationality")]
+        public string? Nationality { get; set; }
 
-        public string? placeOfBirth { get; set; }
+        [JsonPropertyName("dataOfBirth")]
+        public DateTime? DataOfBirth { get; set; }
 
-        public string? countryOfBirth { get; set; }
+        [JsonPropertyName("placeOfBirth")]
+        public string? PlaceOfBirth { get; set; }
 
-        public DateTime? dateOfDeath { get; set; }
+        [JsonPropertyName("countryOfBirth")]
+        public string? CountryOfBirth { get; set; }
 
-        public string? placeOfDeath { get; set; }
+        [JsonPropertyName("dateOfDeath")]
+        public DateTime? DateOfDeath { get; set; }
 
-        public string? countryOfDeath { get; set; }
+        [JsonPropertyName("placeOfDeath")]
+        public string? PlaceOfDeath { get; set; }
 
-        public string? description { get; set; }
+        [JsonPropertyName("countryOfDeath")]
+        public string? CountryOfDeath { get; set; }
 
-        public byte[]? image { get; set; }
+        [JsonPropertyName("description")]
+        public string? Description { get; set; }
 
-        public bool? isAlive { get; set; }
+        [JsonPropertyName("image")]
+        public byte[]? Image { get; set; }
+
+        [JsonPropertyName("isAlive")]
+        public bool? IsAlive { get; set; }
     }
 }

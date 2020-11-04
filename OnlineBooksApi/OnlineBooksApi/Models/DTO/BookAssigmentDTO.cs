@@ -8,6 +8,8 @@ namespace OnlineBooksApi.Models.DTO
     public class BookAssigmentDTO
     {
 #nullable enable
+        public long? Id { get; set; }
+
         public string? Title { get; set; }
 
         public string? Description { get; set; }

@@ -11,6 +11,8 @@ namespace OnlineBooksApi.Models.DTO
     public class AuthorDTO 
     {
 #nullable enable
+        public long Id { get; set; }
+
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }

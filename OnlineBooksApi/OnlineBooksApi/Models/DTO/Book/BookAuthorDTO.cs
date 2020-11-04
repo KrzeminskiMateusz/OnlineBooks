@@ -9,6 +9,8 @@ namespace OnlineBooksApi.Models.DTO.Book
     public class BookAuthorDTO
     {
 #nullable enable
+        public long Id { get; set; }
+
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }

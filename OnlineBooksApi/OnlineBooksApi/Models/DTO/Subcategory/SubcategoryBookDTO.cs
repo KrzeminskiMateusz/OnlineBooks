@@ -8,6 +8,8 @@ namespace OnlineBooksApi.Models.DTO.Subcategory
     public class SubcategoryBookDTO
     {
 #nullable enable
+        public long Id { get; set; }
+
         public string? Title { get; set; }
 
         public string? Description { get; set; }

@@ -4,6 +4,7 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace OnlineBooksDesktopApp.ViewModel
 {
@@ -15,7 +16,13 @@ namespace OnlineBooksDesktopApp.ViewModel
         public AuthorsView(IAuthorRepository authorRepository)
         {
             _authorRepository = authorRepository;
-            //Authors =  _authorRepository.GetAuthors().Result;
-        }    
+
+            GetAuthors();
+        }  
+        
+        private async Task GetAuthors()
+        {
+            Authors = await _authorRepository.GetAuthors();
+        }
     }
 }

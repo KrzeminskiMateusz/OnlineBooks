@@ -9,6 +9,8 @@ namespace OnlineBooksApi.Models.DTO.Category
     public class CategoryBookDTO
     {
 #nullable enable
+        public long Id { get; set; }
+
         public string? Title { get; set; }
 
         public string? Description { get; set; }

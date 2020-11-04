@@ -7,6 +7,8 @@ namespace OnlineBooksApi.Models.DTO.Shelf
 {
     public class ShelfDTO
     {
+        public long Id { get; set; }
+
         public string Name { get; set; }
 
         public bool IsAvelibleForAuthor { get; set; }

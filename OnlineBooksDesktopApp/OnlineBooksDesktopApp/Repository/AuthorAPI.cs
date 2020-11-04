@@ -11,34 +11,54 @@ namespace OnlineBooksDesktopApp.Repository
 {
     class AuthorAPI : IAuthorRepository
     {
-        public Task<Author> GetAuthor(long id)
+        public async Task<Author> GetAuthor(long authorId)
         {
-            throw new NotImplementedException();
+            using (HttpClient client = new HttpClient())
+            {
+                var result = client.GetStreamAsync("https://localhost:44348/api/Authors/" + authorId);
+
+                return await JsonSerializer.DeserializeAsync<Author>(await result);
+            }         
         }
 
         public async Task<List<Author>> GetAuthors()
         {
-            WebClient webClient = new WebClient();
-            string responseBody = webClient.DownloadString("https://localhost:44348/api/Authors");
+            using (HttpClient client = new HttpClient())
+            {
+                var result = client.GetStreamAsync("https://localhost:44348/api/Authors");
 
-            List<Author> authors = JsonSerializer.Deserialize<List<Author>>(responseBody);
-
-            return await Task.FromResult(authors);
+                return await JsonSerializer.DeserializeAsync<List<Author>>(await result);
+            }
         }
 
-        public Task<bool> CreateAuthor(Author author)
+        public async Task<HttpResponseMessage> CreateAuthor(Author author)
         {
-            throw new NotImplementedException();
+            var authorJSON = JsonSerializer.Serialize(author);
+            var httpContent = new StringContent(authorJSON, Encoding.UTF8, "application/json");
+
+            using (HttpClient client = new HttpClient())
+            {               
+                return await client.PostAsync("https://localhost:44348/api/Authors", httpContent);
+            }
         }
 
-        public Task<bool> DeleteAuthor(long authorId)
+        public async Task<HttpResponseMessage> UpdateAuthor(Author author)
         {
-            throw new NotImplementedException();
+            var authorJSON = JsonSerializer.Serialize(author);
+            var httpContent = new StringContent(authorJSON, Encoding.UTF8, "application/json");
+
+            using (HttpClient client = new HttpClient())
+            {
+                return await client.PutAsync("https://localhost:44348/api/Authors/" + author.Id, httpContent);
+            }
         }
 
-        public Task<bool> UpdateAuthor(Author author)
+        public async Task<HttpResponseMessage> DeleteAuthor(long authorId)
         {
-            throw new NotImplementedException();
+            using (HttpClient client = new HttpClient())
+            {
+                return await client.DeleteAsync("https://localhost:44348/api/Authors/" + authorId);
+            }
         }
     }
 }
