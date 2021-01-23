@@ -61,7 +61,6 @@ namespace OnlineBooksApi.Controllers
         {
             try
             {
-                var test = "";
                 var author = await LoadAuthorAsync(id);
 
                 if (author == null)
